@@ -91,7 +91,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         public void onMovieItemClicked(View imageView, MovieItem movieItem) {
             try {
                 // TODO: 10/31/19  transition animation
-                DetailFragment detailFragment = DetailFragment.newInstance(movieItem);
+                DetailFragment detailFragment = DetailFragment.newInstance(movieItem.getId());
                 ((MainActivity) mActivityRef.get()).replaceFragment(detailFragment);
 
 //            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mFragmentRef.get().getActivity(), imageView, "poster");

@@ -8,6 +8,7 @@ import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.xieyao.movies.data.bean.MovieItem;
+import com.xieyao.movies.data.local.MovieDatabase;
 import com.xieyao.movies.data.local.MovieLocalRepo;
 import com.xieyao.movies.data.local.MovieLocalRepoImpl;
 

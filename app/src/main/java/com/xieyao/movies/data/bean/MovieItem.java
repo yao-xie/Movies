@@ -6,15 +6,18 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.xieyao.movies.data.local.DBConstant;
 
 /**
  * Created by xieyao on 2019-10-11.
  */
+@Entity(tableName = DBConstant.MOVIE_TABLE_NAME)
 public class MovieItem implements Parcelable {
 
     @PrimaryKey

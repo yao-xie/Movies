@@ -13,8 +13,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
 import com.xieyao.movies.data.bean.MovieItem;
+import com.xieyao.movies.data.local.MovieDatabase;
 import com.xieyao.movies.data.local.MovieLocalRepo;
 import com.xieyao.movies.data.local.MovieLocalRepoImpl;
+import com.xieyao.movies.data.provider.MovieContentProvider;
 
 import org.junit.After;
 import org.junit.Assert;

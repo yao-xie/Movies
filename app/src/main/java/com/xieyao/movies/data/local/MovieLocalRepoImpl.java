@@ -2,11 +2,14 @@ package com.xieyao.movies.data.local;
 
 import androidx.lifecycle.LiveData;
 
+import com.xieyao.movies.R;
 import com.xieyao.movies.data.bean.MovieItem;
 import com.xieyao.movies.data.bean.ReviewItem;
 import com.xieyao.movies.data.bean.TrailerItem;
+import com.xieyao.movies.utils.ConfigUtils;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
 
@@ -15,52 +18,82 @@ import io.reactivex.Observable;
  */
 public class MovieLocalRepoImpl implements MovieLocalRepo {
 
-    public MovieLocalRepoImpl() {
+    private MovieDao movieDao;
 
+    public MovieLocalRepoImpl(MovieDao movieDao) {
+        this.movieDao = movieDao;
     }
 
     @Override
     public Observable<List<MovieItem>> getMovies() {
-        return null;
+        return Observable.fromCallable(new Callable<List<MovieItem>>() {
+            @Override
+            public List<MovieItem> call() throws Exception {
+                switch (ConfigUtils.getListMode()) {
+                    case R.id.action_top_rated_movies:
+                        return movieDao.getTopRatedMovies();
+                    case R.id.action_favorite_movies:
+                        return movieDao.getFavoriteMovies();
+                    default:
+                        return movieDao.getPopularMovies();
+                }
+            }
+        });
     }
 
     @Override
     public Observable<MovieItem> getMovieById(final int movieId) {
-        return null;
+        return Observable.fromCallable(new Callable<MovieItem>() {
+            @Override
+            public MovieItem call() throws Exception {
+                return movieDao.getMovieById(movieId);
+            }
+        });
     }
 
     @Override
     public Observable<List<MovieItem>> getFavoriteMovies() {
-        return null;
+        return Observable.fromCallable(new Callable<List<MovieItem>>() {
+            @Override
+            public List<MovieItem> call() throws Exception {
+                return movieDao.getFavoriteMovies();
+            }
+        });
     }
 
     @Override
     public LiveData<List<MovieItem>> getFavoriteMoviesLiveData() {
-        return null;
+        return movieDao.getFavoriteMoviesLiveData();
     }
 
     @Override
     public void saveMovies(List<MovieItem> movieItems) {
-        // TODO
+        movieDao.insertAll(movieItems);
     }
 
     @Override
     public Observable<MovieItem> updateMovie(final MovieItem movieItem) {
-        return null;
+        return Observable.fromCallable(new Callable<MovieItem>() {
+            @Override
+            public MovieItem call() throws Exception {
+                movieDao.updateMovie(movieItem);
+                return movieDao.getMovieById(movieItem.getId());
+            }
+        });
     }
 
     @Override
     public void removeMovies() {
-        // TODO
+        movieDao.deleteAll();
     }
 
     @Override
     public void saveTrailers(List<TrailerItem> trailerItems) {
-        // TODO
+        movieDao.insertTrailers(trailerItems);
     }
 
     @Override
     public void saveReviews(List<ReviewItem> reviewItems) {
-        // TODO
+        movieDao.insertReviews(reviewItems);
     }
 }

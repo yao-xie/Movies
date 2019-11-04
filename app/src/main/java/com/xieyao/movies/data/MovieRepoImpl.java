@@ -41,7 +41,22 @@ public class MovieRepoImpl implements MovieRepo {
             //get favorite movies from local database
             return localRepo.getFavoriteMovies();
         } else {
-            return remoteRepo.getMovies().subscribeOn(Schedulers.io());
+            //get popular or top rated movies from remote or local database
+            Observable<List<MovieItem>> remoteData = remoteRepo.getMovies().doOnNext(new Consumer<List<MovieItem>>() {
+                @Override
+                public void accept(List<MovieItem> movieItems) throws Exception {
+                    localRepo.saveMovies(movieItems);
+                }
+
+            });
+            Observable<List<MovieItem>> localData = localRepo.getMovies();
+            return Observable.zip(remoteData, localData, new BiFunction<List<MovieItem>, List<MovieItem>, List<MovieItem>>() {
+
+                @Override
+                public List<MovieItem> apply(List<MovieItem> remote, List<MovieItem> local) throws Exception {
+                    return CollectionUtils.isEmpty(remote) ? local : remote;
+                }
+            }).subscribeOn(Schedulers.io());
         }
     }
 
@@ -82,7 +97,22 @@ public class MovieRepoImpl implements MovieRepo {
 
     @Override
     public Observable<MovieItem> getMovieDetail(int movieId) throws Exception {
-        return remoteRepo.getMovieDetail(movieId);
+        return Observable.zip(remoteRepo.getMovieDetail(movieId), localRepo.getMovieById(movieId),
+                new BiFunction<MovieItem, MovieItem, MovieItem>() {
+                    @Override
+                    public MovieItem apply(MovieItem remoteMovieItem, MovieItem localMovieItem) throws Exception {
+                        //keep the favorite value from database
+                        if (null != localMovieItem) {
+                            remoteMovieItem.setFavorite(localMovieItem.getFavorite());
+                        }
+                        return remoteMovieItem;
+                    }
+                }).flatMap(new Function<MovieItem, ObservableSource<MovieItem>>() {
+            @Override
+            public ObservableSource<MovieItem> apply(MovieItem movieItem) throws Exception {
+                return localRepo.updateMovie(movieItem);
+            }
+        }).subscribeOn(Schedulers.io());
     }
 
     @Override

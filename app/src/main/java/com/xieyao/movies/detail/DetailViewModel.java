@@ -37,8 +37,9 @@ public class DetailViewModel extends ViewModel {
     public MutableLiveData<List<ReviewItem>> reviews = new MutableLiveData<>();
 
     private MovieRepo mMovieRepo;
+    private int mMovieId;
 
-    private Disposable mDetailRemoteDisposable;
+    private Disposable mDetailLocalDisposable, mDetailRemoteDisposable, mDetailUpdateDisposable, mTrailersDisposable, mReviewsDisposable;
 
     public View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
@@ -51,8 +52,32 @@ public class DetailViewModel extends ViewModel {
         this.mMovieRepo = movieRepo;
     }
 
-    public void start(MovieItem movie) {
-        mMovie.setValue(movie);
+    public void start(int movieId) {
+        this.mMovieId = movieId;
+        fetchLocalData();
+    }
+
+    // get movie detail data from local db
+    public void fetchLocalData() {
+        mDetailLocalDisposable = mMovieRepo.getMovieFromLocal(mMovieId)
+                .subscribeOn(ioScheduler)
+                .observeOn(mainThreadScheduler)
+                .subscribeWith(new DisposableObserver<MovieItem>() {
+
+                    @Override
+                    public void onNext(MovieItem movieItem) {
+                        mMovie.setValue(movieItem);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.toast(R.string.error_get_favorite_failed);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
     public void fetchRemoteData() {
@@ -64,7 +89,7 @@ public class DetailViewModel extends ViewModel {
     // get movie detail data from remote
     private void getMovieDetail() {
         try {
-            mDetailRemoteDisposable = mMovieRepo.getMovieDetail(mMovie.getValue().getId())
+            mDetailRemoteDisposable = mMovieRepo.getMovieDetail(mMovieId)
                     .subscribeOn(ioScheduler)
                     .observeOn(mainThreadScheduler)
                     .subscribeWith(new DisposableObserver<MovieItem>() {
@@ -90,18 +115,89 @@ public class DetailViewModel extends ViewModel {
     }
 
     // get trailers list data
-    private void getMovieTrailers() {}
+    private void getMovieTrailers() {
+        try {
+            mTrailersDisposable = mMovieRepo.getMovieTrailers(mMovieId)
+                    .subscribeOn(ioScheduler)
+                    .observeOn(mainThreadScheduler)
+                    .subscribeWith(new DisposableObserver<List<TrailerItem>>() {
+                        @Override
+                        public void onNext(List<TrailerItem> trailerItems) {
+                            trailers.setValue(trailerItems);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            ToastUtils.toast(R.string.error_get_trailers_failed);
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtils.toast(R.string.error_get_trailers_failed);
+        }
+    }
 
     // get reviews list data
-    private void getMovieReviews() {}
+    private void getMovieReviews() {
+        try {
+            mReviewsDisposable = mMovieRepo.getMovieReviews(mMovieId)
+                    .subscribeOn(ioScheduler)
+                    .observeOn(mainThreadScheduler)
+                    .subscribeWith(new DisposableObserver<List<ReviewItem>>() {
+                        @Override
+                        public void onNext(List<ReviewItem> reviewItems) {
+                            reviews.setValue(reviewItems);
+                        }
 
-    //set favorite
-    public void setFavorite(int favorite) {}
+                        @Override
+                        public void onError(Throwable e) {
+                            ToastUtils.toast(R.string.error_get_reviews_failed);
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtils.toast(R.string.error_get_reviews_failed);
+        }
+    }
+
+    public void setFavorite(int favorite) {
+        if (null != mMovieRepo) {
+            mDetailUpdateDisposable = mMovieRepo.updateMovieFavoriteStatus(mMovieId, favorite)
+                    .subscribeOn(ioScheduler)
+                    .observeOn(mainThreadScheduler)
+                    .subscribeWith(new DisposableObserver<MovieItem>() {
+
+                        @Override
+                        public void onNext(MovieItem movieItem) {
+                            mMovie.setValue(movieItem);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            ToastUtils.toast(R.string.error_update_movie_detail_failed);
+                        }
+
+                        @Override
+                        public void onComplete() {
+                        }
+                    });
+        }
+    }
 
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        DisposeUtils.dispose(mDetailRemoteDisposable);
+        DisposeUtils.dispose(mDetailLocalDisposable, mDetailRemoteDisposable, mDetailUpdateDisposable, mReviewsDisposable, mTrailersDisposable);
     }
 }

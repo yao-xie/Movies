@@ -18,7 +18,6 @@ import com.xieyao.movies.utils.ToastUtils;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -71,13 +70,7 @@ public class ListViewModel extends ViewModel implements SwipeRefreshLayout.OnRef
         this.mRefreshing.setValue(true);
         mPage = 1;
         try {
-            Observable<List<MovieItem>> observable = mMovieRepo.refreshMovies();
-            if (null == observable && ConfigUtils.getListMode() == R.id.action_favorite_movies) {
-                ToastUtils.toast(R.string.error_favorite_todo);
-                mRefreshing.setValue(false);
-                return;
-            }
-            mRefreshDisposable = observable
+            mRefreshDisposable = mMovieRepo.refreshMovies()
                     .subscribeOn(ioScheduler)
                     .observeOn(mainThreadScheduler)
                     .subscribeWith(new DisposableObserver<List<MovieItem>>() {
@@ -99,7 +92,6 @@ public class ListViewModel extends ViewModel implements SwipeRefreshLayout.OnRef
                     });
         } catch (Exception e) {
             e.printStackTrace();
-            mRefreshing.setValue(false);
             ToastUtils.toast(R.string.error_refresh_failed);
         }
     }

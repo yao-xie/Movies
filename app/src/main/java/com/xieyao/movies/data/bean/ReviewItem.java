@@ -2,13 +2,18 @@ package com.xieyao.movies.data.bean;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
+import com.xieyao.movies.data.local.DBConstant;
 
 /**
  * Created by xieyao on 2019-10-12.
  */
+@Entity(tableName = DBConstant.REVIEWS_TABLE_NAME,
+        foreignKeys = @ForeignKey(entity = MovieItem.class, parentColumns = "id", childColumns = "movie_id"))
 public class ReviewItem {
     /**
      * author : SWITCH.

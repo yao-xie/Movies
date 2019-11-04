@@ -10,7 +10,6 @@
     <string name="action_reviews">Tap to Reviews</string>
 
     <string name="error_refresh_failed">Refresh failed, please try later...</string>
-    <string name="error_favorite_todo">Favorite is to be implemented...</string>
     <string name="error_loadmore_failed">Load more failed, please try later...</string>
     <string name="error_get_movie_detail_failed">Get movie detail failed, please try later...</string>
     <string name="error_get_favorite_failed">Get favorite status failed, please try later...</string>

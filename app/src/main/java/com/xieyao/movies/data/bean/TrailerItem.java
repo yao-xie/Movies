@@ -2,13 +2,18 @@ package com.xieyao.movies.data.bean;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
+import com.xieyao.movies.data.local.DBConstant;
 
 /**
  * Created by xieyao on 2019-10-11.
  */
+@Entity(tableName = DBConstant.TRAILERS_TABLE_NAME,
+        foreignKeys = @ForeignKey(entity = MovieItem.class, parentColumns = "id", childColumns = "movie_id"))
 public class TrailerItem {
     /**
      * id : 5ccf56c8925141044e2c88d6
