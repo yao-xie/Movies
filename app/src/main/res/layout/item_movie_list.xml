@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:picasso="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.xieyao.movies.utils.ApiUtils" />
+
+        <variable
+            name="movie"
+            type="com.xieyao.movies.data.bean.MovieItem" />
+
+        <variable
+            name="listener"
+            type="com.xieyao.movies.adapter.MovieListAdapter.MovieItemClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/poster"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_centerVertical="true"
+            android:onClick="@{(v) -> listener.onMovieItemClicked(v,movie)}"
+            android:scaleType="centerCrop"
+            android:transitionName="poster"
+            app:layout_constraintDimensionRatio="w,3:2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            picasso:error="@{@drawable/ic_error}"
+            picasso:path="@{ApiUtils.getPoster(movie.posterPath)}"
+            picasso:placeholder="@{@drawable/ic_loading}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

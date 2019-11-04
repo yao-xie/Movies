@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="trailer"
+            type="com.xieyao.movies.data.bean.TrailerItem" />
+
+        <variable
+            name="listener"
+            type="com.xieyao.movies.detail.DetailItemClickListener" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:onClick="@{(v) -> listener.onItemClick(trailer)}"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:id="@+id/playIcon"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_play" />
+
+        <TextView
+            android:id="@+id/trailerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/playIcon"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{trailer.name}"
+            android:textColor="@drawable/selector_trailer_title"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <data class=".ListBinding">
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.xieyao.movies.list.ListViewModel" />
+
+        <variable
+            name="onRefreshListener"
+            type="androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/listContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:onRefreshListener="@{viewModel}"
+            app:setRefreshing="@{viewModel.mRefreshing}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/movies_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:movieItems="@{viewModel.mListData}"
+                app:setScrollPosition="@{viewModel.mListPosition}" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ImageView
+            android:id="@+id/empty_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_empty"
+            android:visibility="@{(viewModel.mListData==null||viewModel.mListData.size()==0)? View.VISIBLE: View.GONE}" />
+
+    </RelativeLayout>
+</layout>
