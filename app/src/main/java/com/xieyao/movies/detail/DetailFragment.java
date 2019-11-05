@@ -21,7 +21,7 @@ import com.xieyao.movies.DetailBindingLand;
 import com.xieyao.movies.R;
 import com.xieyao.movies.ViewModelFactory;
 import com.xieyao.movies.adapter.ReviewListAdapter;
-import com.xieyao.movies.adapter.TrailerListAdapter;
+import com.xieyao.movies.adapter.DetailListAdapter;
 import com.xieyao.movies.base.BaseFragment;
 import com.xieyao.movies.utils.ToastUtils;
 import com.xieyao.movies.widget.TrailerItemDecoration;
@@ -114,7 +114,7 @@ public class DetailFragment extends BaseFragment {
     private void initTrailerList(View rootView) {
         RecyclerView trailersRecyclerView = rootView.findViewById(R.id.trailers_recyclerview);
         setLayoutManager(trailersRecyclerView);
-        TrailerListAdapter adapter = new TrailerListAdapter(this);
+        DetailListAdapter adapter = new DetailListAdapter(this);
         trailersRecyclerView.setAdapter(adapter);
         trailersRecyclerView.addItemDecoration(new TrailerItemDecoration(
                 getContext().getDrawable(R.drawable.divider_light),

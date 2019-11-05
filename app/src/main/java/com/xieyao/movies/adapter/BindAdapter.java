@@ -89,7 +89,7 @@ public class BindAdapter {
     @SuppressWarnings("unchecked")
     @BindingAdapter("app:trailerItems")
     public static void setTrailerItems(RecyclerView recyclerView, List<TrailerItem> trailerItems) {
-        TrailerListAdapter adapter = (TrailerListAdapter) recyclerView.getAdapter();
+        DetailListAdapter adapter = (DetailListAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.setData(trailerItems);
         }
