@@ -106,17 +106,17 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case TYPE_TRAILER: {
-                ItemTrailerBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mFragmentRef.get().getContext()), R.layout.item_trailer, parent, false);
+                ItemTrailerBinding binding = DataBindingUtil.inflate(LayoutInflater.from(App.getInstance().getApplicationContext()), R.layout.item_trailer, parent, false);
                 binding.setListener(mListener);
                 return new DetailListAdapter.TrailerViewHolder(binding);
             }
             case TYPE_REVIEW: {
-                ItemReviewBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mFragmentRef.get().getContext()), R.layout.item_review, parent, false);
+                ItemReviewBinding binding = DataBindingUtil.inflate(LayoutInflater.from(App.getInstance().getApplicationContext()), R.layout.item_review, parent, false);
                 binding.setListener(mListener);
                 return new DetailListAdapter.ReviewViewHolder(binding);
             }
             default: {
-                ItemTitleBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mFragmentRef.get().getContext()), R.layout.item_title, parent, false);
+                ItemTitleBinding binding = DataBindingUtil.inflate(LayoutInflater.from(App.getInstance().getApplicationContext()), R.layout.item_title, parent, false);
                 return new DetailListAdapter.TitleViewHolder(binding);
             }
         }
