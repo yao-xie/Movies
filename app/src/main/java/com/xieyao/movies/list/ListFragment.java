@@ -49,20 +49,25 @@ public class ListFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ListBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false);
-        mViewModel = obtainViewModel();
-        binding.setLifecycleOwner(getActivity());
-        binding.setViewModel(mViewModel);
-        View root = binding.getRoot();
-
-        initRecyclerView(root);
-
+        mRootView = initView(inflater, container, getResources().getConfiguration().orientation);
         if (mViewModel.isEmpty()) {
             mViewModel.retrieveFavoriteMovies(getActivity());
             mViewModel.refreshMovies();
         }
+        return mRootView;
+    }
 
-        return root;
+    @Override
+    protected View initView(LayoutInflater inflater, ViewGroup container, int orientation) {
+        ListBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false);
+        if (null == mViewModel) {
+            mViewModel = obtainViewModel();
+        }
+        binding.setLifecycleOwner(getActivity());
+        binding.setViewModel(mViewModel);
+        View view = binding.getRoot();
+        initRecyclerView(view);
+        return view;
     }
 
     public ListViewModel obtainViewModel() {
@@ -176,4 +181,5 @@ public class ListFragment extends BaseFragment {
         }
 
     }
+
 }

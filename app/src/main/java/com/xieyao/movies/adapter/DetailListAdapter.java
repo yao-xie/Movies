@@ -8,12 +8,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.xieyao.movies.App;
 import com.xieyao.movies.R;
 import com.xieyao.movies.data.bean.ReviewItem;
 import com.xieyao.movies.data.bean.TrailerItem;
-import com.xieyao.movies.databinding.ItemReviewListBinding;
+import com.xieyao.movies.databinding.ItemReviewBinding;
 import com.xieyao.movies.databinding.ItemTitleBinding;
-import com.xieyao.movies.databinding.ItemTrailerListBinding;
+import com.xieyao.movies.databinding.ItemTrailerBinding;
 import com.xieyao.movies.detail.DetailItemClickListener;
 import com.xieyao.movies.utils.CollectionUtils;
 
@@ -61,14 +62,27 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void setUpData() {
         mData = new ArrayList<>();
         if (!mTrailerData.isEmpty()) {
-            mData.add(mFragmentRef.get().getString(R.string.trailers));
-            mData.add(mTrailerData);
+            mData.add(App.getInstance().getApplicationContext().getString(R.string.trailers));
+            mData.addAll(mTrailerData);
         }
         if (!mReviewData.isEmpty()) {
-            mData.add(mFragmentRef.get().getString(R.string.reviews));
-            mData.add(mReviewData);
+            mData.add(App.getInstance().getApplicationContext().getString(R.string.reviews));
+            mData.addAll(mReviewData);
         }
         notifyDataSetChanged();
+    }
+
+    public int getReviewStartPosition() {
+        if (CollectionUtils.isEmpty(mData)) {
+            return 0;
+        }
+        for (int i = 0; i < mData.size(); i++) {
+            Object obj = mData.get(i);
+            if (obj instanceof ReviewItem) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -92,12 +106,12 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case TYPE_TRAILER: {
-                ItemTrailerListBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mFragmentRef.get().getContext()), R.layout.item_trailer_list, parent, false);
+                ItemTrailerBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mFragmentRef.get().getContext()), R.layout.item_trailer, parent, false);
                 binding.setListener(mListener);
                 return new DetailListAdapter.TrailerViewHolder(binding);
             }
             case TYPE_REVIEW: {
-                ItemReviewListBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mFragmentRef.get().getContext()), R.layout.item_review_list, parent, false);
+                ItemReviewBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mFragmentRef.get().getContext()), R.layout.item_review, parent, false);
                 binding.setListener(mListener);
                 return new DetailListAdapter.ReviewViewHolder(binding);
             }
@@ -113,28 +127,21 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         Object item = position < mData.size() ? mData.get(position) : null;
         if (null != item) {
             if (item instanceof String && holder instanceof DetailListAdapter.TitleViewHolder) {
-            } else if (item instanceof String && holder instanceof DetailListAdapter.TitleViewHolder) {
-
-            } else if (item instanceof String && holder instanceof DetailListAdapter.TitleViewHolder) {
-
+                ((TitleViewHolder) holder).mBinding.setTitle((String) item);
+                ((TitleViewHolder) holder).mBinding.executePendingBindings();
+            } else if (item instanceof TrailerItem && holder instanceof DetailListAdapter.TrailerViewHolder) {
+                ((TrailerViewHolder) holder).mBinding.setTrailer((TrailerItem) item);
+                ((TrailerViewHolder) holder).mBinding.executePendingBindings();
+            } else if (item instanceof ReviewItem && holder instanceof DetailListAdapter.ReviewViewHolder) {
+                ((ReviewViewHolder) holder).mBinding.setReview((ReviewItem) item);
+                ((ReviewViewHolder) holder).mBinding.executePendingBindings();
             }
         }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TrailerViewHolder holder, int position) {
-        try {
-            final TrailerItem trailerItem = position < mTrailerData.size() ? mTrailerData.get(position) : null;
-            holder.mBinding.setTrailer(trailerItem);
-            holder.mBinding.executePendingBindings();
-
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
     public int getItemCount() {
-        return null != mTrailerData ? mTrailerData.size() : 0;
+        return null != mData ? mData.size() : 0;
     }
 
     public static class TitleViewHolder extends RecyclerView.ViewHolder {
@@ -149,9 +156,9 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public static class TrailerViewHolder extends RecyclerView.ViewHolder {
 
-        ItemTrailerListBinding mBinding;
+        ItemTrailerBinding mBinding;
 
-        public TrailerViewHolder(ItemTrailerListBinding binding) {
+        public TrailerViewHolder(ItemTrailerBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }
@@ -160,9 +167,9 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
 
-        public ItemReviewListBinding mBinding;
+        public ItemReviewBinding mBinding;
 
-        public ReviewViewHolder(ItemReviewListBinding binding) {
+        public ReviewViewHolder(ItemReviewBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }

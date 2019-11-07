@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.xieyao.movies.MainActivity;
 import com.xieyao.movies.R;
 import com.xieyao.movies.data.bean.MovieItem;
-import com.xieyao.movies.databinding.ItemMovieListBinding;
+import com.xieyao.movies.databinding.ItemMovieBinding;
 import com.xieyao.movies.detail.DetailFragment;
 
 import java.lang.ref.WeakReference;
@@ -49,7 +49,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     @NonNull
     @Override
     public MovieListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemMovieListBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mFragmentRef.get().getContext()), R.layout.item_movie_list, parent, false);
+        ItemMovieBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mFragmentRef.get().getContext()), R.layout.item_movie, parent, false);
         binding.setListener(mListener);
         return new ViewHolder(binding);
     }
@@ -71,9 +71,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ItemMovieListBinding mBinding;
+        public ItemMovieBinding mBinding;
 
-        public ViewHolder(ItemMovieListBinding binding) {
+        public ViewHolder(ItemMovieBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }
@@ -90,14 +90,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
         public void onMovieItemClicked(View imageView, MovieItem movieItem) {
             try {
-                // TODO: 10/31/19  transition animation
                 DetailFragment detailFragment = DetailFragment.newInstance(movieItem.getId());
                 ((MainActivity) mActivityRef.get()).replaceFragment(detailFragment);
-
-//            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mFragmentRef.get().getActivity(), imageView, "poster");
-//            Intent intent = new Intent(mFragmentRef.get().getActivity(), DetailActivity.class);
-//            intent.putExtra("movieId", movieItem.getId());
-//            mFragmentRef.get().getActivity().startActivity(intent, activityOptionsCompat.toBundle());
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -1,5 +1,6 @@
 package com.xieyao.movies.detail;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
@@ -20,10 +20,8 @@ import com.xieyao.movies.DetailBinding;
 import com.xieyao.movies.DetailBindingLand;
 import com.xieyao.movies.R;
 import com.xieyao.movies.ViewModelFactory;
-import com.xieyao.movies.adapter.ReviewListAdapter;
 import com.xieyao.movies.adapter.DetailListAdapter;
 import com.xieyao.movies.base.BaseFragment;
-import com.xieyao.movies.utils.ToastUtils;
 import com.xieyao.movies.widget.TrailerItemDecoration;
 
 /**
@@ -39,8 +37,8 @@ public class DetailFragment extends BaseFragment {
     private int mMovieId;
 
     private NestedScrollView mScrollView;
-    private View mTrailersDivider, mReviewsDivider;
-    private ReviewListAdapter mReviewAdapter;
+    private RecyclerView mRecyclerView;
+    private DetailListAdapter mAdapter;
 
     public DetailFragment() {
     }
@@ -66,32 +64,57 @@ public class DetailFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mRootView = initView(inflater, container, getResources().getConfiguration().orientation);
+        if (null == savedInstanceState) {
+            mViewModel.start(mMovieId);
+            mViewModel.fetchRemoteData();
+        }
+        return mRootView;
+    }
+
+    @Override
+    protected View initView(LayoutInflater inflater, ViewGroup container, int orientation) {
         View root = null;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             DetailBindingLand binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_land, container, false);
             binding.setLifecycleOwner(getActivity());
-            mViewModel = obtainViewModel();
+            if (null == mViewModel) {
+                mViewModel = obtainViewModel();
+            }
             binding.setViewModel(mViewModel);
             root = binding.getRoot();
         } else {
             DetailBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
             binding.setLifecycleOwner(getActivity());
-            mViewModel = obtainViewModel();
+            if (null == mViewModel) {
+                mViewModel = obtainViewModel();
+            }
             binding.setViewModel(mViewModel);
             root = binding.getRoot();
         }
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.movie_detail);
-
+        setTitle(R.string.movie_detail);
         initAnchorViews(root);
-        initTrailerList(root);
-        initReviewList(root);
-
-        if (null == savedInstanceState) {
-            mViewModel.start(mMovieId);
-            mViewModel.fetchRemoteData();
-        }
+        initDetailList(root);
         return root;
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        enableBackBtn(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        enableBackBtn(true);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        enableBackBtn(false);
     }
 
     /**
@@ -102,8 +125,6 @@ public class DetailFragment extends BaseFragment {
      */
     private void initAnchorViews(View root) {
         mScrollView = root.findViewById(R.id.scrollview);
-        mTrailersDivider = root.findViewById(R.id.divider1);
-        mReviewsDivider = root.findViewById(R.id.divider2);
     }
 
     public DetailViewModel obtainViewModel() {
@@ -111,22 +132,12 @@ public class DetailFragment extends BaseFragment {
         return ViewModelProviders.of(getActivity(), factory).get(DetailViewModel.class);
     }
 
-    private void initTrailerList(View rootView) {
-        RecyclerView trailersRecyclerView = rootView.findViewById(R.id.trailers_recyclerview);
-        setLayoutManager(trailersRecyclerView);
-        DetailListAdapter adapter = new DetailListAdapter(this);
-        trailersRecyclerView.setAdapter(adapter);
-        trailersRecyclerView.addItemDecoration(new TrailerItemDecoration(
-                getContext().getDrawable(R.drawable.divider_light),
-                getResources().getDimensionPixelSize(R.dimen.trailers_divider_height)));
-    }
-
-    private void initReviewList(View rootView) {
-        RecyclerView reviewsRecyclerView = rootView.findViewById(R.id.reviews_recyclerview);
-        setLayoutManager(reviewsRecyclerView);
-        mReviewAdapter = new ReviewListAdapter(this);
-        reviewsRecyclerView.setAdapter(mReviewAdapter);
-        reviewsRecyclerView.addItemDecoration(new TrailerItemDecoration(
+    private void initDetailList(View rootView) {
+        mRecyclerView = rootView.findViewById(R.id.detail_recyclerview);
+        setLayoutManager(mRecyclerView);
+        mAdapter = new DetailListAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new TrailerItemDecoration(
                 getContext().getDrawable(R.drawable.divider_light),
                 getResources().getDimensionPixelSize(R.dimen.trailers_divider_height)));
     }
@@ -145,25 +156,29 @@ public class DetailFragment extends BaseFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                getActivity().onBackPressed();
-                return true;
-            case R.id.action_trailers:
-                if (null != mScrollView && null != mTrailersDivider) {
-                    mScrollView.smoothScrollTo(0, mTrailersDivider.getBottom());
-                }
-                return true;
-            case R.id.action_reviews:
-                if (null != mReviewAdapter && mReviewAdapter.getItemCount() == 0) {
-                    ToastUtils.toast(R.string.error_no_reviews);
-                }
-                if (null != mScrollView && null != mReviewsDivider) {
-                    mScrollView.smoothScrollTo(0, mReviewsDivider.getBottom());
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        try {
+            switch (item.getItemId()) {
+                case R.id.action_trailers:
+                    if (null != mScrollView && null != mRecyclerView) {
+                        mScrollView.smoothScrollTo(0, mRecyclerView.getTop());
+                    }
+                    return true;
+                case R.id.action_reviews:
+                    if (null != mScrollView && null != mRecyclerView && null != mAdapter) {
+                        int position = mAdapter.getReviewStartPosition();
+                        View itemView = mRecyclerView.getChildAt(position);
+                        if (null != itemView) {
+                            mScrollView.smoothScrollTo(0, itemView.getTop());
+                        }
+                    }
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+
+            }
+        } catch (Exception e) {
+            return super.onOptionsItemSelected(item);
         }
     }
+
 }

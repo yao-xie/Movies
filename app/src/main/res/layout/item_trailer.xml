@@ -15,12 +15,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:onClick="@{(v) -> listener.onItemClick(trailer)}"
-        android:layout_height="80dp">
+        android:layout_height="@dimen/item_trailer_height">
 
         <ImageView
             android:id="@+id/playIcon"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
+            android:layout_width="@dimen/playicon_size"
+            android:layout_height="@dimen/playicon_size"
             android:layout_centerVertical="true"
             android:scaleType="centerCrop"
             android:src="@drawable/selector_play" />
@@ -30,13 +30,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="@dimen/trailer_title_margin_left"
             android:layout_toRightOf="@id/playIcon"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@{trailer.name}"
             android:textColor="@drawable/selector_trailer_title"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_size_trailer_title" />
 
     </RelativeLayout>
 </layout>

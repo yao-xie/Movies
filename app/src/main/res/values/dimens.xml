@@ -6,11 +6,45 @@
     <dimen name="back_drop_height_max_land">100dp</dimen>
     <dimen name="back_drop_height_min">120dp</dimen>
     <dimen name="back_drop_height_min_land">60dp</dimen>
-    <dimen name="back_drop_title_size">48sp</dimen>
+    <dimen name="back_drop_title_size">48dp</dimen>
     <dimen name="default_elevation">4dp</dimen>
     <dimen name="default_radius">2dp</dimen>
     <dimen name="detail_info_margin_vertical">4dp</dimen>
     <dimen name="detail_info_margin_max">32dp</dimen>
     <dimen name="detail_info_margin_min">16dp</dimen>
     <dimen name="trailers_divider_height">1dp</dimen>
+
+    <dimen name="textsize_year">24dp</dimen>
+    <dimen name="textsize_duration">18dp</dimen>
+    <dimen name="textsize_score">13dp</dimen>
+    <dimen name="textsize_description">14dp</dimen>
+    <dimen name="textsize_year_land">28dp</dimen>
+    <dimen name="textsize_duration_land">20dp</dimen>
+    <dimen name="textsize_score_land">15dp</dimen>
+    <dimen name="textsize_description_land">18dp</dimen>
+
+    <dimen name="item_trailer_height">80dp</dimen>
+    <dimen name="item_title_height">80dp</dimen>
+    <dimen name="item_review_padding">8dp</dimen>
+    <dimen name="playicon_size">52dp</dimen>
+    <dimen name="trailer_title_margin_left">8dp</dimen>
+
+    <dimen name="favorite_btn_padding_vertical">8dp</dimen>
+    <dimen name="favorite_btn_padding_horizontal">18dp</dimen>
+    <dimen name="favorite_btn_margin_top">10dp</dimen>
+    <dimen name="favorite_btn_padding_vertical_land">6dp</dimen>
+    <dimen name="favorite_btn_padding_horizontal_land">16dp</dimen>
+    <dimen name="favorite_btn_margin_top_land">10dp</dimen>
+
+    <dimen name="score_margin_top">6dp</dimen>
+    <dimen name="score_margin_top_land">6dp</dimen>
+    <dimen name="duration_margin_top">6dp</dimen>
+    <dimen name="duration_margin_top_land">6dp</dimen>
+
+    <dimen name="text_size_review_content">15dp</dimen>
+    <dimen name="text_size_review_author">13dp</dimen>
+    <dimen name="text_size_trailer_title">16dp</dimen>
+    <dimen name="text_size_detail_list_header_title">24dp</dimen>
+
+
 </resources>

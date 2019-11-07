@@ -41,7 +41,7 @@ public class TrailerItemDecoration extends RecyclerView.ItemDecoration {
 
                 RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
-                int dividerTop = child.getBottom() + params.bottomMargin;
+                int dividerTop = dividerTop = child.getBottom() + params.bottomMargin;
                 int dividerBottom = dividerTop + divider.getIntrinsicHeight();
 
                 divider.setBounds(dividerLeft, dividerTop, dividerRight, dividerBottom);

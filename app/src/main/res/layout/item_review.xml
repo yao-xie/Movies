@@ -16,8 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:paddingTop="@dimen/item_review_padding"
+        android:paddingBottom="@dimen/item_review_padding">
 
         <TextView
             android:id="@+id/review_content"
@@ -25,9 +25,10 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="@{review.content}"
             android:onClick="@{(v) -> listener.onItemClick(review)}"
-            android:textColor="@drawable/selector_trailer_title" />
+            android:text="@{review.content}"
+            android:textColor="@drawable/selector_trailer_title"
+            android:textSize="@dimen/text_size_review_content" />
 
         <TextView
             android:id="@+id/review_author"
@@ -37,7 +38,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{String.format(@string/detail_author_format,review.author)}"
-            android:textSize="13sp"
+            android:textSize="@dimen/text_size_review_author"
             android:textStyle="italic" />
 
     </LinearLayout>

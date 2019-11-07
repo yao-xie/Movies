@@ -1,5 +1,6 @@
 package com.xieyao.movies.adapter;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageButton;
@@ -62,6 +63,7 @@ public class BindAdapter {
     public static void setImageUrl(ImageView imageView, String path, Drawable placeHolderRes, Drawable errorRes) {
         Picasso.get()
                 .load(path)
+                .config(Bitmap.Config.RGB_565)//to reduce memory usage
                 .placeholder(placeHolderRes)
                 .error(errorRes)
                 .into(imageView);
@@ -91,16 +93,16 @@ public class BindAdapter {
     public static void setTrailerItems(RecyclerView recyclerView, List<TrailerItem> trailerItems) {
         DetailListAdapter adapter = (DetailListAdapter) recyclerView.getAdapter();
         if (adapter != null) {
-            adapter.setData(trailerItems);
+            adapter.setTrailerData(trailerItems);
         }
     }
 
     @SuppressWarnings("unchecked")
     @BindingAdapter("app:reviewItems")
     public static void setReviewItems(RecyclerView recyclerView, List<ReviewItem> reviewItems) {
-        ReviewListAdapter adapter = (ReviewListAdapter) recyclerView.getAdapter();
+        DetailListAdapter adapter = (DetailListAdapter) recyclerView.getAdapter();
         if (adapter != null) {
-            adapter.setData(reviewItems);
+            adapter.setReviewData(reviewItems);
         }
     }
 
