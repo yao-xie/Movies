@@ -22,9 +22,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/movie_item_root"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:dynamicWidth="@{width}">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/poster"
@@ -34,7 +33,7 @@
             android:onClick="@{(v) -> listener.onMovieItemClicked(v,movie)}"
             android:scaleType="centerCrop"
             android:transitionName="poster"
-            app:layout_constraintDimensionRatio="w,3:2"
+            app:layout_constraintDimensionRatio="2:3"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             picasso:error="@{@drawable/ic_error}"

@@ -33,6 +33,7 @@ import com.xieyao.movies.ViewModelFactory;
 import com.xieyao.movies.adapter.MovieListAdapter;
 import com.xieyao.movies.base.BaseFragment;
 import com.xieyao.movies.utils.ConfigUtils;
+import com.xieyao.movies.utils.UIUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -45,7 +46,7 @@ public class ListFragment extends BaseFragment {
     private ListViewModel mViewModel;
 
     private RecyclerView mRecyclerView;
-    private FlexboxLayoutManager mLayoutManager;
+    private GridLayoutManager mLayoutManager;
 
     public static ListFragment newInstance() {
         return new ListFragment();
@@ -88,30 +89,14 @@ public class ListFragment extends BaseFragment {
 
     private void initRecyclerView(View root) {
         mRecyclerView = root.findViewById(R.id.movies_recyclerview);
-        mLayoutManager = new FlexboxLayoutManager(getContext());
-        mLayoutManager.setFlexWrap(FlexWrap.WRAP);
-        mLayoutManager.setFlexDirection(FlexDirection.ROW);
-        mLayoutManager.setAlignItems(AlignItems.STRETCH);
-        mLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
+        int spanCount = UIUtils.getSpanCount();
+        mLayoutManager = new GridLayoutManager(getContext(), spanCount);
+        mLayoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        float screenWidth = displayMetrics.widthPixels;
-        float xdpi = displayMetrics.xdpi;
-        int divide = Math.round(screenWidth / xdpi);
-        int width = Math.round(screenWidth / divide);
-
-        MovieListAdapter mAdapter = new MovieListAdapter(this, width);
+        MovieListAdapter mAdapter = new MovieListAdapter(this, 0);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(new OnScrollListener(mViewModel));
-    }
-
-    private int getWidth(int x, int y, int orientation) {
-        return orientation == Configuration.ORIENTATION_PORTRAIT ? x : y;
-    }
-
-    private int getHeight(int x, int y, int orientation) {
-        return orientation == Configuration.ORIENTATION_PORTRAIT ? y : x;
     }
 
     @Override
