@@ -3,6 +3,8 @@ package com.xieyao.movies.adapter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -67,6 +69,13 @@ public class BindAdapter {
                 .placeholder(placeHolderRes)
                 .error(errorRes)
                 .into(imageView);
+    }
+
+    @BindingAdapter("app:dynamicWidth")
+    public static void setDynamicWidth(View view, Integer width) {
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.width = width;
+        view.setLayoutParams(layoutParams);
     }
 
     //for detail

@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xieyao.movies.MainActivity;
+import com.xieyao.movies.MovieBinding;
 import com.xieyao.movies.R;
 import com.xieyao.movies.data.bean.MovieItem;
-import com.xieyao.movies.databinding.ItemMovieBinding;
 import com.xieyao.movies.detail.DetailFragment;
 
 import java.lang.ref.WeakReference;
@@ -29,10 +29,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     private WeakReference<Fragment> mFragmentRef;
     private List<MovieItem> mData = new ArrayList<>();
     private MovieItemClickListener mListener;
+    private int mWidth;
 
-    public MovieListAdapter(Fragment fragment) {
+    public MovieListAdapter(Fragment fragment, int width) {
         this.mFragmentRef = new WeakReference<>(fragment);
         mListener = new MovieItemClickListener(fragment.getActivity());
+        this.mWidth = width;
     }
 
     public void setData(List<MovieItem> data) {
@@ -49,8 +51,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     @NonNull
     @Override
     public MovieListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemMovieBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mFragmentRef.get().getContext()), R.layout.item_movie, parent, false);
+        MovieBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mFragmentRef.get().getContext()), R.layout.item_movie, parent, false);
         binding.setListener(mListener);
+        binding.setWidth(mWidth);
         return new ViewHolder(binding);
     }
 
@@ -71,9 +74,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ItemMovieBinding mBinding;
+        public MovieBinding mBinding;
 
-        public ViewHolder(ItemMovieBinding binding) {
+        public ViewHolder(MovieBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }
@@ -98,5 +101,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         }
 
     }
+
 
 }

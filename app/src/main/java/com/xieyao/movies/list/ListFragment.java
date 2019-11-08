@@ -1,13 +1,19 @@
 package com.xieyao.movies.list;
 
+import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +22,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 import com.xieyao.movies.ListBinding;
 import com.xieyao.movies.R;
 import com.xieyao.movies.ViewModelFactory;
@@ -34,7 +45,7 @@ public class ListFragment extends BaseFragment {
     private ListViewModel mViewModel;
 
     private RecyclerView mRecyclerView;
-    private GridLayoutManager mLayoutManager;
+    private FlexboxLayoutManager mLayoutManager;
 
     public static ListFragment newInstance() {
         return new ListFragment();
@@ -77,13 +88,30 @@ public class ListFragment extends BaseFragment {
 
     private void initRecyclerView(View root) {
         mRecyclerView = root.findViewById(R.id.movies_recyclerview);
-        mLayoutManager = new GridLayoutManager(getContext(),
-                getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 4 : 2);
-        mLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        mLayoutManager = new FlexboxLayoutManager(getContext());
+        mLayoutManager.setFlexWrap(FlexWrap.WRAP);
+        mLayoutManager.setFlexDirection(FlexDirection.ROW);
+        mLayoutManager.setAlignItems(AlignItems.STRETCH);
+        mLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        MovieListAdapter mAdapter = new MovieListAdapter(this);
+
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float screenWidth = displayMetrics.widthPixels;
+        float xdpi = displayMetrics.xdpi;
+        int divide = Math.round(screenWidth / xdpi);
+        int width = Math.round(screenWidth / divide);
+
+        MovieListAdapter mAdapter = new MovieListAdapter(this, width);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(new OnScrollListener(mViewModel));
+    }
+
+    private int getWidth(int x, int y, int orientation) {
+        return orientation == Configuration.ORIENTATION_PORTRAIT ? x : y;
+    }
+
+    private int getHeight(int x, int y, int orientation) {
+        return orientation == Configuration.ORIENTATION_PORTRAIT ? y : x;
     }
 
     @Override

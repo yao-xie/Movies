@@ -6,7 +6,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnApplyWindowInsetsListener;
+import android.view.WindowInsets;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,16 +30,26 @@ import com.xieyao.movies.list.ListFragment;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE_INFO_OF_PHONE_SETTINGS = 1;
     private static final int REQUEST_CODE_OPEN_SETTINGS = REQUEST_CODE_INFO_OF_PHONE_SETTINGS + 1;
+    private FrameLayout mFragmentContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mFragmentContainer = findViewById(R.id.fragmentContainer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         checkPermission(savedInstanceState);
+        mFragmentContainer.setOnApplyWindowInsetsListener(new OnApplyWindowInsetsListener() {
+            @Override
+            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                Log.e(TAG, "onApplyWindowInsets");
+                return insets;
+            }
+        });
     }
 
     private void checkPermission(@Nullable Bundle savedInstanceState) {
@@ -94,14 +109,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
         } else {
             getSupportFragmentManager().popBackStack();
-        }
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-//            hideSystemUI();
         }
     }
 

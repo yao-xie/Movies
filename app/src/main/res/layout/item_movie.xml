@@ -3,9 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:picasso="http://schemas.android.com/apk/res-auto">
 
-    <data>
+    <data class=".MovieBinding">
 
         <import type="com.xieyao.movies.utils.ApiUtils" />
+
+        <variable
+            name="width"
+            type="java.lang.Integer" />
 
         <variable
             name="movie"
@@ -17,8 +21,10 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:id="@+id/movie_item_root"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:dynamicWidth="@{width}">
 
         <ImageView
             android:id="@+id/poster"
