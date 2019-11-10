@@ -168,23 +168,25 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbarlayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/cat_topappbar_tall_toolbar_height"
+            android:layout_height="@dimen/back_drop_height_max_land"
+            android:elevation="@dimen/default_elevation"
             android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsingtoolbarlayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:collapsedTitleTextAppearance="@style/Toolbar.TitleText.Collapsed"
+                app:expandedTitleTextAppearance="@style/Toolbar.TitleText.Expanded"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <ImageView
                     android:id="@+id/back_drop_image"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/back_drop_height_max"
+                    android:layout_height="@dimen/back_drop_height_max_land"
                     android:adjustViewBounds="true"
                     android:background="@color/back_drop_color"
                     android:contentDescription="@null"
-                    android:elevation="@dimen/default_elevation"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
                     android:src="@color/black"
@@ -197,13 +199,12 @@
                     picasso:path="@{ApiUtils.getBackDrop(viewModel.mMovie.backdropPath)}"
                     picasso:placeholder="@{@color/black}" />
 
-
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     style="?attr/catalogToolbarWithCloseButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:elevation="0dp"
+                    android:elevation="@dimen/default_elevation"
                     app:layout_collapseMode="pin"
                     app:title="@{DetailUtils.getBackDropTitle(viewModel.mMovie.title)}" />
 

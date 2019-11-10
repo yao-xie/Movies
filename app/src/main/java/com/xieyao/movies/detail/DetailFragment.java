@@ -10,16 +10,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xieyao.movies.DetailBinding;
 import com.xieyao.movies.DetailBindingLand;
 import com.xieyao.movies.R;
-import com.xieyao.movies.ViewModelFactory;
 import com.xieyao.movies.adapter.DetailListAdapter;
 import com.xieyao.movies.base.BaseFragment;
 import com.xieyao.movies.widget.TrailerItemDecoration;
@@ -92,10 +92,15 @@ public class DetailFragment extends BaseFragment {
             binding.setViewModel(mViewModel);
             root = binding.getRoot();
         }
-        setTitle(R.string.movie_detail);
+        initTitle(root);
         initAnchorViews(root);
         initDetailList(root);
         return root;
+    }
+
+    private void initTitle(View root) {
+        Toolbar toolbar = root.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
     }
 
 

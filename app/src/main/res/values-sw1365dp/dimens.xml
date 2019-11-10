@@ -2,8 +2,8 @@
 <resources>
 	<dimen name="activity_horizontal_margin">60.6667dp</dimen>
 	<dimen name="activity_vertical_margin">60.6667dp</dimen>
-	<dimen name="back_drop_height_max">758.3333dp</dimen>
-	<dimen name="back_drop_height_max_land">379.1667dp</dimen>
+	<dimen name="back_drop_height_max">728.0000dp</dimen>
+	<dimen name="back_drop_height_max_land">455.0000dp</dimen>
 	<dimen name="back_drop_height_min">455.0000dp</dimen>
 	<dimen name="back_drop_height_min_land">227.5000dp</dimen>
 	<dimen name="back_drop_title_size">182.0000dp</dimen>
@@ -40,4 +40,6 @@
 	<dimen name="text_size_review_author">49.2917dp</dimen>
 	<dimen name="text_size_trailer_title">60.6667dp</dimen>
 	<dimen name="text_size_detail_list_header_title">91.0000dp</dimen>
+	<dimen name="text_size_detail_title_expanded">136.5000dp</dimen>
+	<dimen name="text_size_detail_title_collapsed">68.2500dp</dimen>
 </resources>
