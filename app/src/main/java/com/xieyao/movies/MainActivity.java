@@ -16,7 +16,6 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -40,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mFragmentContainer = findViewById(R.id.fragmentContainer);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         checkPermission(savedInstanceState);
         mFragmentContainer.setOnApplyWindowInsetsListener(new OnApplyWindowInsetsListener() {
             @Override
@@ -56,16 +53,18 @@ public class MainActivity extends AppCompatActivity {
         if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, REQUEST_CODE_INFO_OF_PHONE_SETTINGS);
         } else {
-            initFragment();
+            initFragment(savedInstanceState);
         }
     }
 
-    private void initFragment() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (fragment == null) {
-            fragment = ListFragment.newInstance();
+    private void initFragment(@Nullable Bundle savedInstanceState) {
+        if (null == savedInstanceState) {
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+            if (fragment == null) {
+                fragment = ListFragment.newInstance();
+            }
+            replaceFragment(fragment);
         }
-        replaceFragment(fragment);
     }
 
     public void replaceFragment(Fragment fragment) {
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         boolean isGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
         if (isGranted && requestCode == REQUEST_CODE_INFO_OF_PHONE_SETTINGS) {
-            initFragment();
+            initFragment(null);
         } else {
             openSettings();
         }

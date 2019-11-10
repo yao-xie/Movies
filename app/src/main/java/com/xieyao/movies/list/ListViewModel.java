@@ -34,6 +34,7 @@ public class ListViewModel extends ViewModel implements SwipeRefreshLayout.OnRef
 
     public MutableLiveData<Boolean> mRefreshing = new MutableLiveData<>();
     //save the listposition, the the fragment be visible from the backstack, scrool to the original position
+    public MutableLiveData<Integer> mTabSelectPosition = new MutableLiveData<>();
     public MutableLiveData<Integer> mListPosition = new MutableLiveData<>();
     public MutableLiveData<List<MovieItem>> mListData = new MutableLiveData<>();
 
@@ -43,6 +44,11 @@ public class ListViewModel extends ViewModel implements SwipeRefreshLayout.OnRef
     public ListViewModel(MovieRepo movieRepo) {
         this.mMovieRepo = movieRepo;
         this.mRefreshing.postValue(false);
+        this.mTabSelectPosition.postValue(ConfigUtils.getListMode());
+    }
+
+    public void setTabPosition(int tabPosition) {
+        this.mTabSelectPosition.postValue(tabPosition);
     }
 
     /**
@@ -56,7 +62,7 @@ public class ListViewModel extends ViewModel implements SwipeRefreshLayout.OnRef
             mMovieRepo.getFavoriteMovies().observe(owner, new Observer<List<MovieItem>>() {
                 @Override
                 public void onChanged(List<MovieItem> movieItems) {
-                    if (ConfigUtils.getListMode() == R.id.action_favorite_movies) {
+                    if (ConfigUtils.getListMode() == ConfigUtils.MODE_FAVORITE_MOVIES) {
                         mListData.setValue(movieItems);
                     }
                 }

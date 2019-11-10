@@ -79,7 +79,7 @@ public class DetailFragment extends BaseFragment {
             DetailBindingLand binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_land, container, false);
             binding.setLifecycleOwner(getActivity());
             if (null == mViewModel) {
-                mViewModel = obtainViewModel();
+                mViewModel = (DetailViewModel) obtainViewModel(DetailViewModel.class);
             }
             binding.setViewModel(mViewModel);
             root = binding.getRoot();
@@ -87,7 +87,7 @@ public class DetailFragment extends BaseFragment {
             DetailBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
             binding.setLifecycleOwner(getActivity());
             if (null == mViewModel) {
-                mViewModel = obtainViewModel();
+                mViewModel = (DetailViewModel) obtainViewModel(DetailViewModel.class);
             }
             binding.setViewModel(mViewModel);
             root = binding.getRoot();
@@ -125,11 +125,6 @@ public class DetailFragment extends BaseFragment {
      */
     private void initAnchorViews(View root) {
         mScrollView = root.findViewById(R.id.scrollview);
-    }
-
-    public DetailViewModel obtainViewModel() {
-        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
-        return ViewModelProviders.of(getActivity(), factory).get(DetailViewModel.class);
     }
 
     private void initDetailList(View rootView) {

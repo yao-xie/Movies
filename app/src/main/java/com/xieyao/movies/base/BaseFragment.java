@@ -10,6 +10,10 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.xieyao.movies.ViewModelFactory;
 
 public abstract class BaseFragment extends Fragment {
 
@@ -49,6 +53,11 @@ public abstract class BaseFragment extends Fragment {
             actionBar.setHomeButtonEnabled(b);
             actionBar.setDisplayHomeAsUpEnabled(b);
         }
+    }
+
+    protected ViewModel obtainViewModel(Class clazz) {
+        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
+        return ViewModelProviders.of(getActivity(), factory).get(clazz);
     }
 
 }

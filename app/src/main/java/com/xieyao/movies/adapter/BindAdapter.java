@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 import com.xieyao.movies.data.bean.MovieItem;
 import com.xieyao.movies.data.bean.ReviewItem;
@@ -34,6 +36,20 @@ public class BindAdapter {
         MovieListAdapter adapter = (MovieListAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.setData(movieItems);
+        }
+    }
+
+    @BindingAdapter("app:selectTabPosition")
+    public static void setSelectTabPosition(TabLayout tabLayout, int tabSelectPosition) {
+        try {
+            if (null != tabLayout) {
+                TabLayout.Tab tab = tabLayout.getTabAt(tabSelectPosition);
+                if (null != tab) {
+                    tab.select();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -1,7 +1,7 @@
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,6 +14,41 @@
         <item name="android:windowDrawsSystemBarBackgrounds">false</item>
         <item name="android:navigationBarColor">@android:color/black</item>
         <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+
+    <style name="ThemeOverlay.AppBarLayout" parent="">
+        <item name="android:textColorPrimary">?attr/colorOnPrimarySurface</item>
+        <item name="colorControlNormal">?attr/colorOnPrimarySurface</item>
+    </style>
+
+
+    <!--    <style name="ThemeOverlay.CollapsingToolbarLayout" parent="">-->
+    <!--        <item name="app:collapsedTitleTextAppearance">?attr/textAppearanceHeadline6</item>-->
+    <!--        <item name="app:expandedTitleTextAppearance">?attr/textAppearanceHeadline5</item>-->
+    <!--    </style>-->
+
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+    <style name="AppTheme.NavigationView">
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#FFFFFF</item>
+    </style>
+
+    <style name="Headline" parent="">
+
+        <item name="android:textColor">@drawable/selector_detail_title</item>
+
+        <!--        <item name="fontFamily">sans-serif</item>-->
+        <!--        <item name="android:fontFamily">sans-serif</item>-->
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">0</item>
     </style>
 
 </resources>

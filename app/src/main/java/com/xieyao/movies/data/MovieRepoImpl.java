@@ -37,7 +37,7 @@ public class MovieRepoImpl implements MovieRepo {
 
     @Override
     public Observable<List<MovieItem>> refreshMovies() throws Exception {
-        if (ConfigUtils.getListMode() == R.id.action_favorite_movies) {
+        if (ConfigUtils.getListMode() == ConfigUtils.MODE_FAVORITE_MOVIES) {
             //get favorite movies from local database
             return localRepo.getFavoriteMovies();
         } else {

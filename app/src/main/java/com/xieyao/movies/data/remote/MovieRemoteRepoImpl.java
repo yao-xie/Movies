@@ -2,7 +2,6 @@ package com.xieyao.movies.data.remote;
 
 import android.util.Pair;
 
-import com.xieyao.movies.R;
 import com.xieyao.movies.api.ApiClient;
 import com.xieyao.movies.api.TmdbApi;
 import com.xieyao.movies.data.bean.MovieItem;
@@ -29,10 +28,10 @@ public class MovieRemoteRepoImpl implements MovieRemoteRepo {
         TmdbApi api = ApiClient.getInstance().getService();
         Observable<MovieResult> movieResultObservable = null;
         switch (ConfigUtils.getListMode()) {
-            case R.id.action_top_rated_movies:
+            case ConfigUtils.MODE_TOP_RATED_MOVIES:
                 movieResultObservable = api.getTopRatedMovies(1);
                 break;
-            case R.id.action_favorite_movies:
+            case ConfigUtils.MODE_FAVORITE_MOVIES:
                 return Observable.fromCallable(new Callable<List<MovieItem>>() {
                     @Override
                     public List<MovieItem> call() throws Exception {
@@ -55,17 +54,17 @@ public class MovieRemoteRepoImpl implements MovieRemoteRepo {
     }
 
     @Override
-    public Observable<Pair<Integer,List<MovieItem>>> getMovies(int page) throws Exception {
+    public Observable<Pair<Integer, List<MovieItem>>> getMovies(int page) throws Exception {
         TmdbApi api = ApiClient.getInstance().getService();
         Observable<MovieResult> movieResultObservable = null;
         switch (ConfigUtils.getListMode()) {
-            case R.id.action_top_rated_movies:
+            case ConfigUtils.MODE_TOP_RATED_MOVIES:
                 movieResultObservable = api.getTopRatedMovies(page);
                 break;
-            case R.id.action_favorite_movies:
-                return Observable.fromCallable(new Callable<Pair<Integer,List<MovieItem>>>() {
+            case ConfigUtils.MODE_FAVORITE_MOVIES:
+                return Observable.fromCallable(new Callable<Pair<Integer, List<MovieItem>>>() {
                     @Override
-                    public Pair<Integer,List<MovieItem>> call() throws Exception {
+                    public Pair<Integer, List<MovieItem>> call() throws Exception {
                         return null;
                     }
                 });
@@ -73,11 +72,11 @@ public class MovieRemoteRepoImpl implements MovieRemoteRepo {
                 movieResultObservable = api.getPopularMovies(page);
                 break;
         }
-        return movieResultObservable.map(new Function<MovieResult, Pair<Integer,List<MovieItem>>>() {
+        return movieResultObservable.map(new Function<MovieResult, Pair<Integer, List<MovieItem>>>() {
             @Override
-            public Pair<Integer,List<MovieItem>> apply(MovieResult movieResult) throws Exception {
+            public Pair<Integer, List<MovieItem>> apply(MovieResult movieResult) throws Exception {
                 if (null != movieResult) {
-                    return new Pair<Integer,List<MovieItem>>(movieResult.getPage(),movieResult.getResults());
+                    return new Pair<Integer, List<MovieItem>>(movieResult.getPage(), movieResult.getResults());
                 }
                 return null;
             }

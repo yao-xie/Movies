@@ -1,35 +1,19 @@
 package com.xieyao.movies.list;
 
-import android.content.Context;
-import android.content.res.Configuration;
-import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.flexbox.AlignItems;
-import com.google.android.flexbox.FlexDirection;
-import com.google.android.flexbox.FlexWrap;
-import com.google.android.flexbox.FlexboxLayoutManager;
-import com.google.android.flexbox.JustifyContent;
+import com.google.android.material.tabs.TabLayout;
 import com.xieyao.movies.ListBinding;
 import com.xieyao.movies.R;
-import com.xieyao.movies.ViewModelFactory;
 import com.xieyao.movies.adapter.MovieListAdapter;
 import com.xieyao.movies.base.BaseFragment;
 import com.xieyao.movies.utils.ConfigUtils;
@@ -47,6 +31,7 @@ public class ListFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
     private GridLayoutManager mLayoutManager;
+    private int mTabPosition;
 
     public static ListFragment newInstance() {
         return new ListFragment();
@@ -73,18 +58,14 @@ public class ListFragment extends BaseFragment {
     protected View initView(LayoutInflater inflater, ViewGroup container, int orientation) {
         ListBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false);
         if (null == mViewModel) {
-            mViewModel = obtainViewModel();
+            mViewModel = (ListViewModel) obtainViewModel(ListViewModel.class);
         }
         binding.setLifecycleOwner(getActivity());
         binding.setViewModel(mViewModel);
         View view = binding.getRoot();
         initRecyclerView(view);
+        addOnTabSelectedListener(view);
         return view;
-    }
-
-    public ListViewModel obtainViewModel() {
-        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
-        return ViewModelProviders.of(getActivity(), factory).get(ListViewModel.class);
     }
 
     private void initRecyclerView(View root) {
@@ -99,16 +80,33 @@ public class ListFragment extends BaseFragment {
         mRecyclerView.addOnScrollListener(new OnScrollListener(mViewModel));
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_main, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+    private void addOnTabSelectedListener(View root) {
+        TabLayout tabLayout = root.findViewById(R.id.tablayout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                try {
+                    mTabPosition = tab.getPosition();
+                    ConfigUtils.setListMode(mTabPosition);
+                    mViewModel.refreshMovies();
+                    if (null != mRecyclerView) {
+                        mRecyclerView.scrollToPosition(0);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        updateTitle();
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
@@ -117,41 +115,9 @@ public class ListFragment extends BaseFragment {
         try {
             if (null != mViewModel) {
                 mViewModel.saveListPosition(mLayoutManager.findFirstVisibleItemPosition());
+                mViewModel.setTabPosition(mTabPosition);
             }
         } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_popular_movies:
-            case R.id.action_top_rated_movies:
-            case R.id.action_favorite_movies:
-                ConfigUtils.setListMode(item.getItemId());
-                updateTitle();
-                mViewModel.refreshMovies();
-                if (null != mRecyclerView) {
-                    mRecyclerView.scrollToPosition(0);
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void updateTitle() {
-        int id = ConfigUtils.getListMode();
-        switch (id) {
-            case R.id.action_popular_movies:
-                setTitle(R.string.action_popular_movies);
-                break;
-            case R.id.action_top_rated_movies:
-                setTitle(R.string.action_top_rated_movies);
-                break;
-            case R.id.action_favorite_movies:
-                setTitle(R.string.action_favorite_movies);
-                break;
         }
     }
 

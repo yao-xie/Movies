@@ -46,5 +46,6 @@
     <dimen name="text_size_trailer_title">16dp</dimen>
     <dimen name="text_size_detail_list_header_title">24dp</dimen>
 
+    <dimen name="cat_topappbar_tall_toolbar_height">192dp</dimen>
 
 </resources>

@@ -30,9 +30,9 @@ public class MovieLocalRepoImpl implements MovieLocalRepo {
             @Override
             public List<MovieItem> call() throws Exception {
                 switch (ConfigUtils.getListMode()) {
-                    case R.id.action_top_rated_movies:
+                    case ConfigUtils.MODE_TOP_RATED_MOVIES:
                         return movieDao.getTopRatedMovies();
-                    case R.id.action_favorite_movies:
+                    case ConfigUtils.MODE_FAVORITE_MOVIES:
                         return movieDao.getFavoriteMovies();
                     default:
                         return movieDao.getPopularMovies();

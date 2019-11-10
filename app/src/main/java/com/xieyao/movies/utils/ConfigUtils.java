@@ -14,6 +14,10 @@ public class ConfigUtils {
 
     private static final String KEY_MOVIE_LIST_MODE = "key_movie_list_mode";
 
+    public static final int MODE_POPULAR_MOVIES = 0;
+    public static final int MODE_TOP_RATED_MOVIES = 1;
+    public static final int MODE_FAVORITE_MOVIES = 2;
+
     private ConfigUtils() {
     }
 
@@ -22,7 +26,7 @@ public class ConfigUtils {
     }
 
     public static int getListMode() {
-        return getIntegerPreference(App.getInstance(), KEY_MOVIE_LIST_MODE, R.id.action_popular_movies);
+        return getIntegerPreference(App.getInstance(), KEY_MOVIE_LIST_MODE, MODE_POPULAR_MOVIES);
     }
 
     private static int getIntegerPreference(Context context, String key, int defaultValue) {

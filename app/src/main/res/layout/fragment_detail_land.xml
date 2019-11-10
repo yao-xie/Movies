@@ -18,201 +18,197 @@
         <variable
             name="viewModel"
             type="com.xieyao.movies.detail.DetailViewModel" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <androidx.constraintlayout.motion.widget.MotionLayout
-            android:id="@+id/motionlayout"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:backDropImageUrl4ML="@{viewModel.mMovie.backdropPath}"
-            app:layoutDescription="@xml/collapsing_back_drop_land"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:showPaths="false">
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/scrollview"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/back_drop_image">
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/activity_vertical_margin">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline1"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:paddingTop="@dimen/activity_vertical_margin">
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.08" />
 
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.08" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.28" />
 
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.28" />
+                <ImageView
+                    android:id="@+id/detail_poster"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/black"
+                    android:elevation="@dimen/default_elevation"
+                    android:transitionName="poster"
+                    app:layout_constraintCircleRadius="@dimen/default_radius"
+                    app:layout_constraintDimensionRatio="2:3"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline2"
+                    app:layout_constraintStart_toStartOf="@+id/guideline1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    picasso:error="@{@drawable/ic_error}"
+                    picasso:path="@{ApiUtils.getPoster(viewModel.mMovie.posterPath)}"
+                    picasso:placeholder="@{@drawable/ic_loading}" />
 
-                    <ImageView
-                        android:id="@+id/detail_poster"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:background="@color/black"
-                        android:elevation="@dimen/default_elevation"
-                        android:transitionName="poster"
-                        app:layout_constraintCircleRadius="@dimen/default_radius"
-                        app:layout_constraintDimensionRatio="2:3"
-                        app:layout_constraintEnd_toEndOf="@+id/guideline2"
-                        app:layout_constraintStart_toStartOf="@+id/guideline1"
-                        app:layout_constraintTop_toTopOf="parent"
-                        picasso:error="@{@drawable/ic_error}"
-                        picasso:path="@{ApiUtils.getPoster(viewModel.mMovie.posterPath)}"
-                        picasso:placeholder="@{@drawable/ic_loading}" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.4" />
 
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.4" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.58" />
 
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.58" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.9" />
 
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.9" />
+                <TextView
+                    android:id="@+id/year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{DetailUtils.getReleaseYear(viewModel.mMovie.releaseDate)}"
+                    android:textSize="@dimen/textsize_year_land"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/year"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{DetailUtils.getReleaseYear(viewModel.mMovie.releaseDate)}"
-                        android:textSize="@dimen/textsize_year_land"
-                        app:layout_constraintStart_toStartOf="@+id/guideline3"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/duration_margin_top_land"
+                    android:text="@{String.format(@string/detail_runtime_format,viewModel.mMovie.runTime)}"
+                    android:textSize="@dimen/textsize_duration_land"
+                    android:textStyle="italic|bold"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@id/year" />
 
-                    <TextView
-                        android:id="@+id/duration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/duration_margin_top_land"
-                        android:text="@{String.format(@string/detail_runtime_format,viewModel.mMovie.runTime)}"
-                        android:textSize="@dimen/textsize_duration_land"
-                        android:textStyle="italic|bold"
-                        app:layout_constraintStart_toStartOf="@+id/guideline3"
-                        app:layout_constraintTop_toBottomOf="@id/year" />
+                <TextView
+                    android:id="@+id/score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/score_margin_top_land"
+                    android:text="@{String.format(@string/detail_vote_average_format,viewModel.mMovie.voteAverage)}"
+                    android:textSize="@dimen/textsize_score_land"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@id/duration" />
 
-                    <TextView
-                        android:id="@+id/score"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/score_margin_top_land"
-                        android:text="@{String.format(@string/detail_vote_average_format,viewModel.mMovie.voteAverage)}"
-                        android:textSize="@dimen/textsize_score_land"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="@+id/guideline3"
-                        app:layout_constraintTop_toBottomOf="@id/duration" />
+                <ImageButton
+                    android:id="@+id/favorate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/favorite_btn_margin_top_land"
+                    android:background="@drawable/bg_btn_favorite"
+                    android:elevation="4dp"
+                    android:onClick="@{(v) -> viewModel.mOnClickListener.onClick(v)}"
+                    android:paddingLeft="@dimen/favorite_btn_padding_horizontal_land"
+                    android:paddingTop="@dimen/favorite_btn_padding_vertical_land"
+                    android:paddingRight="@dimen/favorite_btn_padding_horizontal_land"
+                    android:paddingBottom="@dimen/favorite_btn_padding_vertical_land"
+                    android:src="@drawable/selector_favorite"
+                    app:favorite="@{viewModel.mMovie.favorite}"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@id/score" />
 
-                    <ImageButton
-                        android:id="@+id/favorate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/favorite_btn_margin_top_land"
-                        android:background="@drawable/bg_btn_favorite"
-                        android:elevation="4dp"
-                        android:onClick="@{(v) -> viewModel.mOnClickListener.onClick(v)}"
-                        android:paddingLeft="@dimen/favorite_btn_padding_horizontal_land"
-                        android:paddingTop="@dimen/favorite_btn_padding_vertical_land"
-                        android:paddingRight="@dimen/favorite_btn_padding_horizontal_land"
-                        android:paddingBottom="@dimen/favorite_btn_padding_vertical_land"
-                        android:src="@drawable/selector_favorite"
-                        app:favorite="@{viewModel.mMovie.favorite}"
-                        app:layout_constraintStart_toStartOf="@+id/guideline3"
-                        app:layout_constraintTop_toBottomOf="@id/score" />
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:autoSizeTextType="uniform"
+                    android:ellipsize="end"
+                    android:text="@{viewModel.mMovie.overview}"
+                    android:textSize="@dimen/textsize_description_land"
+                    app:layout_constraintBottom_toBottomOf="@+id/detail_poster"
+                    app:layout_constraintLeft_toLeftOf="@id/guideline4"
+                    app:layout_constraintRight_toLeftOf="@id/guideline5"
+                    app:layout_constraintTop_toTopOf="@+id/year" />
 
-                    <TextView
-                        android:id="@+id/description"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:autoSizeTextType="uniform"
-                        android:ellipsize="end"
-                        android:text="@{viewModel.mMovie.overview}"
-                        android:textSize="@dimen/textsize_description_land"
-                        app:layout_constraintBottom_toBottomOf="@+id/detail_poster"
-                        app:layout_constraintLeft_toLeftOf="@id/guideline4"
-                        app:layout_constraintRight_toLeftOf="@id/guideline5"
-                        app:layout_constraintTop_toTopOf="@+id/year" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/detail_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/detail_info_margin_max"
+                    android:layout_marginRight="@dimen/detail_info_margin_max"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detail_poster"
+                    app:reviewItems="@{viewModel.reviews}"
+                    app:trailerItems="@{viewModel.trailers}" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/detail_recyclerview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/detail_info_margin_max"
-                        android:layout_marginRight="@dimen/detail_info_margin_max"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/detail_poster"
-                        app:reviewItems="@{viewModel.reviews}"
-                        app:trailerItems="@{viewModel.trailers}" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
-            </androidx.core.widget.NestedScrollView>
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbarlayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/cat_topappbar_tall_toolbar_height"
+            android:fitsSystemWindows="true">
 
-            <ImageView
-                android:id="@+id/back_drop_image"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/back_drop_height_max_land"
-                android:adjustViewBounds="true"
-                android:background="@color/back_drop_color"
-                android:contentDescription="@null"
-                android:elevation="@dimen/default_elevation"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
-                android:src="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                picasso:error="@{@color/back_drop_color}"
-                picasso:path="@{ApiUtils.getBackDrop(viewModel.mMovie.backdropPath)}"
-                picasso:placeholder="@{@color/black}" />
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsingtoolbarlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-            <TextView
-                android:id="@+id/back_drop_title"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/back_drop_height_max_land"
-                android:elevation="@dimen/default_elevation"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@{DetailUtils.getBackDropTitle(viewModel.mMovie.title)}"
-                android:textColor="@color/white"
-                android:textSize="@dimen/back_drop_title_size"
-                app:layout_constraintBottom_toBottomOf="@id/back_drop_image"
-                app:layout_constraintStart_toStartOf="parent" />
+                <ImageView
+                    android:id="@+id/back_drop_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/back_drop_height_max"
+                    android:adjustViewBounds="true"
+                    android:background="@color/back_drop_color"
+                    android:contentDescription="@null"
+                    android:elevation="@dimen/default_elevation"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    android:src="@color/black"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    picasso:error="@{@color/back_drop_color}"
+                    picasso:path="@{ApiUtils.getBackDrop(viewModel.mMovie.backdropPath)}"
+                    picasso:placeholder="@{@color/black}" />
 
-        </androidx.constraintlayout.motion.widget.MotionLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    style="?attr/catalogToolbarWithCloseButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:elevation="0dp"
+                    app:layout_collapseMode="pin"
+                    app:title="@{DetailUtils.getBackDropTitle(viewModel.mMovie.title)}" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
