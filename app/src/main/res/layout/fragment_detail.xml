@@ -181,6 +181,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     picasso:error="@{@color/back_drop_color}"
+                    picasso:gardientTransform="@{true}"
                     picasso:path="@{ApiUtils.getBackDrop(viewModel.mMovie.backdropPath)}"
                     picasso:placeholder="@{@color/black}" />
 

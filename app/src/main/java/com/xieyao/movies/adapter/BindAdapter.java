@@ -14,12 +14,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 import com.xieyao.movies.data.bean.MovieItem;
 import com.xieyao.movies.data.bean.ReviewItem;
 import com.xieyao.movies.data.bean.TrailerItem;
+import com.xieyao.movies.widget.GradientTransformation;
 
 import java.util.List;
 
@@ -77,14 +78,17 @@ public class BindAdapter {
         }
     }
 
-    @BindingAdapter(value = {"picasso:path", "picasso:placeholder", "picasso:error"}, requireAll = false)
-    public static void setImageUrl(ImageView imageView, String path, Drawable placeHolderRes, Drawable errorRes) {
-        Picasso.get()
+    @BindingAdapter(value = {"picasso:path", "picasso:placeholder", "picasso:error", "picasso:gardientTransform"}, requireAll = false)
+    public static void setImageUrl(ImageView imageView, String path, Drawable placeHolderRes, Drawable errorRes, boolean transformFlag) {
+        RequestCreator creator = Picasso.get()
                 .load(path)
                 .config(Bitmap.Config.RGB_565)//to reduce memory usage
                 .placeholder(placeHolderRes)
-                .error(errorRes)
-                .into(imageView);
+                .error(errorRes);
+        if (transformFlag) {
+            creator = creator.transform(new GradientTransformation());
+        }
+        creator.into(imageView);
     }
 
     @BindingAdapter("app:dynamicWidth")
