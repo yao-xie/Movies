@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,13 +27,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE_INFO_OF_PHONE_SETTINGS = 1;
     private static final int REQUEST_CODE_OPEN_SETTINGS = REQUEST_CODE_INFO_OF_PHONE_SETTINGS + 1;
-    private FrameLayout mFragmentContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mFragmentContainer = findViewById(R.id.fragmentContainer);
         checkPermission(savedInstanceState);
     }
 

@@ -35,6 +35,10 @@ public class ListFragment extends BaseFragment {
     private GridLayoutManager mLayoutManager;
     private int mListMode;
 
+    public ListFragment() {
+        super();
+    }
+
     public ListFragment(int position) {
         super();
         this.mListMode = position;

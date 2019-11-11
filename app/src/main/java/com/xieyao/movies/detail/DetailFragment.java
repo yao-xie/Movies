@@ -1,7 +1,6 @@
 package com.xieyao.movies.detail;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xieyao.movies.DetailBinding;
-import com.xieyao.movies.DetailBindingLand;
 import com.xieyao.movies.R;
 import com.xieyao.movies.adapter.DetailListAdapter;
 import com.xieyao.movies.base.BaseFragment;
@@ -74,24 +72,13 @@ public class DetailFragment extends BaseFragment {
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, int orientation) {
-        View root = null;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            DetailBindingLand binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_land, container, false);
-            binding.setLifecycleOwner(getActivity());
-            if (null == mViewModel) {
-                mViewModel = (DetailViewModel) obtainViewModel(DetailViewModel.class);
-            }
-            binding.setViewModel(mViewModel);
-            root = binding.getRoot();
-        } else {
-            DetailBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
-            binding.setLifecycleOwner(getActivity());
-            if (null == mViewModel) {
-                mViewModel = (DetailViewModel) obtainViewModel(DetailViewModel.class);
-            }
-            binding.setViewModel(mViewModel);
-            root = binding.getRoot();
+        DetailBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
+        binding.setLifecycleOwner(getActivity());
+        if (null == mViewModel) {
+            mViewModel = (DetailViewModel) obtainViewModel(DetailViewModel.class);
         }
+        binding.setViewModel(mViewModel);
+        View root = binding.getRoot();
         initTitle(root);
         initAnchorViews(root);
         initDetailList(root);
