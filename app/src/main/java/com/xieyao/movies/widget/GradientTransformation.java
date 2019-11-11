@@ -22,7 +22,7 @@ public class GradientTransformation implements Transformation {
         Bitmap grandientBitmap = source.copy(source.getConfig(), true);
         Canvas canvas = new Canvas(grandientBitmap);
         LinearGradient grad =
-                new LinearGradient(x / 2, y / 2f, x / 2, y / 3f, startColor, endColor, Shader.TileMode.CLAMP);
+                new LinearGradient(x / 2, y / 1.3f, x / 2, y / 8f, startColor, endColor, Shader.TileMode.CLAMP);
         Paint p = new Paint(Paint.DITHER_FLAG);
         p.setShader(null);
         p.setDither(true);

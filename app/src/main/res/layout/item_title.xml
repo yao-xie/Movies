@@ -19,7 +19,7 @@
             android:id="@+id/trailer_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/detail_info_margin_min"
+            android:layout_marginLeft="@dimen/detail_info_title_margin_left"
             android:layout_marginRight="@dimen/detail_info_margin_max"
             android:text="@{title}"
             android:textSize="@dimen/text_size_detail_list_header_title"

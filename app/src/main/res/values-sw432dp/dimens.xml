@@ -12,6 +12,7 @@
 	<dimen name="detail_info_margin_vertical">4.8000dp</dimen>
 	<dimen name="detail_info_margin_max">38.4000dp</dimen>
 	<dimen name="detail_info_margin_min">19.2000dp</dimen>
+	<dimen name="detail_info_title_margin_left">9.6000dp</dimen>
 	<dimen name="trailers_divider_height">1.2000dp</dimen>
 	<dimen name="textsize_year">28.8000dp</dimen>
 	<dimen name="textsize_duration">21.6000dp</dimen>
