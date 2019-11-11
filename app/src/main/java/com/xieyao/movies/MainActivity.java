@@ -6,11 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnApplyWindowInsetsListener;
-import android.view.WindowInsets;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -22,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.xieyao.movies.list.ListFragment;
+import com.xieyao.movies.main.MainFragment;
 
 /**
  * Created by xieyao on 2019-10-10.
@@ -40,13 +36,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mFragmentContainer = findViewById(R.id.fragmentContainer);
         checkPermission(savedInstanceState);
-        mFragmentContainer.setOnApplyWindowInsetsListener(new OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                Log.e(TAG, "onApplyWindowInsets");
-                return insets;
-            }
-        });
     }
 
     private void checkPermission(@Nullable Bundle savedInstanceState) {
@@ -61,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if (null == savedInstanceState) {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
             if (fragment == null) {
-                fragment = ListFragment.newInstance();
+                fragment = MainFragment.newInstance();
             }
             replaceFragment(fragment);
         }

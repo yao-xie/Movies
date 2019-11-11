@@ -24,10 +24,10 @@ import io.reactivex.functions.Function;
 public class MovieRemoteRepoImpl implements MovieRemoteRepo {
 
     @Override
-    public Observable<List<MovieItem>> getMovies() throws Exception {
+    public Observable<List<MovieItem>> getMovies(int listMode) throws Exception {
         TmdbApi api = ApiClient.getInstance().getService();
         Observable<MovieResult> movieResultObservable = null;
-        switch (ConfigUtils.getListMode()) {
+        switch (listMode) {
             case ConfigUtils.MODE_TOP_RATED_MOVIES:
                 movieResultObservable = api.getTopRatedMovies(1);
                 break;
@@ -54,10 +54,10 @@ public class MovieRemoteRepoImpl implements MovieRemoteRepo {
     }
 
     @Override
-    public Observable<Pair<Integer, List<MovieItem>>> getMovies(int page) throws Exception {
+    public Observable<Pair<Integer, List<MovieItem>>> getMovies(int listMode, int page) throws Exception {
         TmdbApi api = ApiClient.getInstance().getService();
         Observable<MovieResult> movieResultObservable = null;
-        switch (ConfigUtils.getListMode()) {
+        switch (listMode) {
             case ConfigUtils.MODE_TOP_RATED_MOVIES:
                 movieResultObservable = api.getTopRatedMovies(page);
                 break;

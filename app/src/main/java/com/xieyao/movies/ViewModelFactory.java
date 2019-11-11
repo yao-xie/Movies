@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.xieyao.movies.data.MovieRepo;
 import com.xieyao.movies.detail.DetailViewModel;
 import com.xieyao.movies.list.ListViewModel;
+import com.xieyao.movies.main.MainViewModel;
 
 /**
  * Created by xieyao on 2019-10-17.
@@ -41,6 +42,8 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new DetailViewModel(mMovieRepo);
         } else if (modelClass.isAssignableFrom(ListViewModel.class)) {
             return (T) new ListViewModel(mMovieRepo);
+        } else if (modelClass.isAssignableFrom(MainViewModel.class)) {
+            return (T) new MainViewModel();
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

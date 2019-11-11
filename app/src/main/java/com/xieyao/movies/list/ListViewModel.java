@@ -16,6 +16,7 @@ import com.xieyao.movies.utils.ConfigUtils;
 import com.xieyao.movies.utils.DisposeUtils;
 import com.xieyao.movies.utils.ToastUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Scheduler;
@@ -41,10 +42,16 @@ public class ListViewModel extends ViewModel implements SwipeRefreshLayout.OnRef
 
     private int mPage = 1;
 
+    private int mListMode;
+
     public ListViewModel(MovieRepo movieRepo) {
         this.mMovieRepo = movieRepo;
         this.mRefreshing.postValue(false);
         this.mTabSelectPosition.postValue(ConfigUtils.getListMode());
+    }
+
+    public void setListMode(int listMode) {
+        this.mListMode = listMode;
     }
 
     public void setTabPosition(int tabPosition) {
@@ -76,7 +83,7 @@ public class ListViewModel extends ViewModel implements SwipeRefreshLayout.OnRef
         this.mRefreshing.setValue(true);
         mPage = 1;
         try {
-            mRefreshDisposable = mMovieRepo.refreshMovies()
+            mRefreshDisposable = mMovieRepo.refreshMovies(mListMode)
                     .subscribeOn(ioScheduler)
                     .observeOn(mainThreadScheduler)
                     .subscribeWith(new DisposableObserver<List<MovieItem>>() {
@@ -104,7 +111,7 @@ public class ListViewModel extends ViewModel implements SwipeRefreshLayout.OnRef
 
     public void loadMoreMovies() {
         try {
-            mLoadMoreDisposable = mMovieRepo.loadMoreMovies(++mPage)
+            mLoadMoreDisposable = mMovieRepo.loadMoreMovies(mListMode, ++mPage)
                     .subscribeOn(ioScheduler)
                     .observeOn(mainThreadScheduler)
                     .subscribeWith(new DisposableObserver<Pair<Integer, List<MovieItem>>>() {

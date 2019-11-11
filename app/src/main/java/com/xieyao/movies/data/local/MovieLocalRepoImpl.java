@@ -25,11 +25,11 @@ public class MovieLocalRepoImpl implements MovieLocalRepo {
     }
 
     @Override
-    public Observable<List<MovieItem>> getMovies() {
+    public Observable<List<MovieItem>> getMovies(final int listMode) {
         return Observable.fromCallable(new Callable<List<MovieItem>>() {
             @Override
             public List<MovieItem> call() throws Exception {
-                switch (ConfigUtils.getListMode()) {
+                switch (listMode) {
                     case ConfigUtils.MODE_TOP_RATED_MOVIES:
                         return movieDao.getTopRatedMovies();
                     case ConfigUtils.MODE_FAVORITE_MOVIES:

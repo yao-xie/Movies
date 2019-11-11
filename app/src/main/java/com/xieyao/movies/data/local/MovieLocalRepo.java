@@ -15,7 +15,7 @@ import io.reactivex.Observable;
  */
 public interface MovieLocalRepo {
 
-    Observable<List<MovieItem>> getMovies();
+    Observable<List<MovieItem>> getMovies(int listMode);
 
     Observable<MovieItem> getMovieById(int movieId);
 

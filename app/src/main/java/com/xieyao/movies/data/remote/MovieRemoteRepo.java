@@ -15,9 +15,9 @@ import io.reactivex.Observable;
  */
 public interface MovieRemoteRepo {
 
-    Observable<List<MovieItem>> getMovies() throws Exception;
+    Observable<List<MovieItem>> getMovies(int listMode) throws Exception;
 
-    Observable<Pair<Integer,List<MovieItem>>> getMovies(int page) throws Exception;
+    Observable<Pair<Integer,List<MovieItem>>> getMovies(int listMode,int page) throws Exception;
 
     Observable<MovieItem> getMovieDetail(int movieId) throws Exception;
 

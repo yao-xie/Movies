@@ -21,8 +21,24 @@ public class ConfigUtils {
     private ConfigUtils() {
     }
 
-    public static void setListMode(int resId) {
-        setIntegerPreference(App.getInstance(), KEY_MOVIE_LIST_MODE, resId);
+
+    public static int getTabTitle(int position){
+        switch (position){
+            case MODE_TOP_RATED_MOVIES:{
+                return R.string.action_top_rated_movies;
+            }
+            case MODE_FAVORITE_MOVIES:{
+                return R.string.action_favorite_movies;
+            }
+            default:{
+                return R.string.action_popular_movies;
+            }
+
+        }
+    }
+
+    public static void setListMode(int listMode) {
+        setIntegerPreference(App.getInstance(), KEY_MOVIE_LIST_MODE, listMode);
     }
 
     public static int getListMode() {

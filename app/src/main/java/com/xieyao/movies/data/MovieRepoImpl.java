@@ -36,20 +36,20 @@ public class MovieRepoImpl implements MovieRepo {
     }
 
     @Override
-    public Observable<List<MovieItem>> refreshMovies() throws Exception {
-        if (ConfigUtils.getListMode() == ConfigUtils.MODE_FAVORITE_MOVIES) {
+    public Observable<List<MovieItem>> refreshMovies(int listMode) throws Exception {
+        if (listMode == ConfigUtils.MODE_FAVORITE_MOVIES) {
             //get favorite movies from local database
             return localRepo.getFavoriteMovies();
         } else {
             //get popular or top rated movies from remote or local database
-            Observable<List<MovieItem>> remoteData = remoteRepo.getMovies().doOnNext(new Consumer<List<MovieItem>>() {
+            Observable<List<MovieItem>> remoteData = remoteRepo.getMovies(listMode).doOnNext(new Consumer<List<MovieItem>>() {
                 @Override
                 public void accept(List<MovieItem> movieItems) throws Exception {
                     localRepo.saveMovies(movieItems);
                 }
 
             });
-            Observable<List<MovieItem>> localData = localRepo.getMovies();
+            Observable<List<MovieItem>> localData = localRepo.getMovies(listMode);
             return Observable.zip(remoteData, localData, new BiFunction<List<MovieItem>, List<MovieItem>, List<MovieItem>>() {
 
                 @Override
@@ -61,8 +61,8 @@ public class MovieRepoImpl implements MovieRepo {
     }
 
     @Override
-    public Observable<Pair<Integer, List<MovieItem>>> loadMoreMovies(int page) throws Exception {
-        return remoteRepo.getMovies(page).doOnNext(new Consumer<Pair<Integer, List<MovieItem>>>() {
+    public Observable<Pair<Integer, List<MovieItem>>> loadMoreMovies(int listMode, int page) throws Exception {
+        return remoteRepo.getMovies(listMode, page).doOnNext(new Consumer<Pair<Integer, List<MovieItem>>>() {
             @Override
             public void accept(Pair<Integer, List<MovieItem>> pair) throws Exception {
                 localRepo.saveMovies(pair.second);

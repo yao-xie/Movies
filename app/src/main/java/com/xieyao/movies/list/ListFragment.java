@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.tabs.TabLayout;
 import com.xieyao.movies.ListBinding;
 import com.xieyao.movies.R;
+import com.xieyao.movies.ViewModelFactory;
 import com.xieyao.movies.adapter.MovieListAdapter;
 import com.xieyao.movies.base.BaseFragment;
 import com.xieyao.movies.utils.ConfigUtils;
@@ -31,10 +33,15 @@ public class ListFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
     private GridLayoutManager mLayoutManager;
-    private int mTabPosition;
+    private int mListMode;
 
-    public static ListFragment newInstance() {
-        return new ListFragment();
+    public ListFragment(int position) {
+        super();
+        this.mListMode = position;
+    }
+
+    public static ListFragment newInstance(int position) {
+        return new ListFragment(position);
     }
 
     @Override
@@ -48,8 +55,11 @@ public class ListFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = initView(inflater, container, getResources().getConfiguration().orientation);
         if (mViewModel.isEmpty()) {
-            mViewModel.retrieveFavoriteMovies(getActivity());
+            if (mListMode == ConfigUtils.MODE_FAVORITE_MOVIES) {
+                mViewModel.retrieveFavoriteMovies(getActivity());
+            }
             mViewModel.refreshMovies();
+            mViewModel.setListMode(mListMode);
         }
         return mRootView;
     }
@@ -60,12 +70,18 @@ public class ListFragment extends BaseFragment {
         if (null == mViewModel) {
             mViewModel = (ListViewModel) obtainViewModel(ListViewModel.class);
         }
+        mViewModel.setListMode(mListMode);
         binding.setLifecycleOwner(getActivity());
         binding.setViewModel(mViewModel);
         View view = binding.getRoot();
         initRecyclerView(view);
-        addOnTabSelectedListener(view);
         return view;
+    }
+
+    @Override
+    protected ViewModel obtainViewModel(Class clazz) {
+        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
+        return ViewModelProviders.of(this, factory).get(clazz);
     }
 
     private void initRecyclerView(View root) {
@@ -80,34 +96,6 @@ public class ListFragment extends BaseFragment {
         mRecyclerView.addOnScrollListener(new OnScrollListener(mViewModel));
     }
 
-    private void addOnTabSelectedListener(View root) {
-        TabLayout tabLayout = root.findViewById(R.id.tablayout);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                try {
-                    mTabPosition = tab.getPosition();
-                    ConfigUtils.setListMode(mTabPosition);
-                    mViewModel.refreshMovies();
-                    if (null != mRecyclerView) {
-                        mRecyclerView.scrollToPosition(0);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-    }
 
     @Override
     public void onDestroyView() {
@@ -115,7 +103,6 @@ public class ListFragment extends BaseFragment {
         try {
             if (null != mViewModel) {
                 mViewModel.saveListPosition(mLayoutManager.findFirstVisibleItemPosition());
-                mViewModel.setTabPosition(mTabPosition);
             }
         } catch (Exception e) {
         }

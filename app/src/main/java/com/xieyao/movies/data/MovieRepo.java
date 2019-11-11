@@ -17,9 +17,9 @@ import io.reactivex.Observable;
  */
 public interface MovieRepo {
 
-    Observable<List<MovieItem>> refreshMovies() throws Exception;
+    Observable<List<MovieItem>> refreshMovies(int listMode) throws Exception;
 
-    Observable<Pair<Integer,List<MovieItem>>> loadMoreMovies(int page) throws Exception;
+    Observable<Pair<Integer,List<MovieItem>>> loadMoreMovies(int listMode,int page) throws Exception;
 
     LiveData<List<MovieItem>> getFavoriteMovies();
 
