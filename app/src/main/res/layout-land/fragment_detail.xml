@@ -73,14 +73,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.4" />
+                    app:layout_constraintGuide_percent="0.38" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.58" />
+                    app:layout_constraintGuide_percent="0.55" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline5"
@@ -119,23 +119,6 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/guideline3"
                     app:layout_constraintTop_toBottomOf="@id/duration" />
-
-                <ImageButton
-                    android:id="@+id/favorate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/favorite_btn_margin_top_land"
-                    android:background="@drawable/bg_btn_favorite"
-                    android:elevation="4dp"
-                    android:onClick="@{(v) -> viewModel.mOnClickListener.onClick(v)}"
-                    android:paddingLeft="@dimen/favorite_btn_padding_horizontal_land"
-                    android:paddingTop="@dimen/favorite_btn_padding_vertical_land"
-                    android:paddingRight="@dimen/favorite_btn_padding_horizontal_land"
-                    android:paddingBottom="@dimen/favorite_btn_padding_vertical_land"
-                    android:src="@drawable/selector_favorite"
-                    app:favorite="@{viewModel.mMovie.favorite}"
-                    app:layout_constraintStart_toStartOf="@+id/guideline3"
-                    app:layout_constraintTop_toBottomOf="@id/score" />
 
                 <TextView
                     android:id="@+id/description"
@@ -210,6 +193,28 @@
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/favorate"
+            style="@style/MyFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fab_margin_land"
+            android:layout_marginTop="@dimen/fab_margin_land"
+            android:layout_marginRight="@dimen/fab_margin_right_land"
+            android:layout_marginBottom="@dimen/fab_margin_land"
+            android:contentDescription="@string/fab_favorite_desc"
+            android:onClick="@{(v) -> viewModel.mOnClickListener.onClick(v)}"
+            android:text="@string/fab_favorite"
+            android:textColor="@drawable/selector_trailer_title"
+            android:textStyle="bold"
+            app:backgroundTint="@color/white"
+            app:elevation="@dimen/default_elevation"
+            app:favorite="@{viewModel.mMovie.favorite}"
+            app:icon="@drawable/selector_favorite"
+            app:iconTint="@color/red"
+            app:layout_anchor="@id/appbarlayout"
+            app:layout_anchorGravity="bottom|right|end" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

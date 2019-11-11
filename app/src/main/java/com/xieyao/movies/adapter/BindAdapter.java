@@ -21,6 +21,7 @@ import com.xieyao.movies.data.bean.MovieItem;
 import com.xieyao.movies.data.bean.ReviewItem;
 import com.xieyao.movies.data.bean.TrailerItem;
 import com.xieyao.movies.widget.GradientTransformation;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.List;
 
@@ -113,8 +114,8 @@ public class BindAdapter {
     }
 
     @BindingAdapter("app:favorite")
-    public static void setFavorite(ImageButton view, int favorite) {
-        view.setSelected(1 == favorite ? true : false);
+    public static void setFavorite(ExtendedFloatingActionButton button, int favorite) {
+        button.setSelected(1 == favorite ? true : false);
     }
 
     @SuppressWarnings("unchecked")

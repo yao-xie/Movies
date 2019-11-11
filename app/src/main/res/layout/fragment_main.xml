@@ -22,12 +22,14 @@
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/black"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:selectTabPosition="@{viewModel.mTabSelectPosition}"
+            app:tabIndicatorColor="@color/colorPrimary"
             app:tabMode="fixed"
             app:tabRippleColor="@color/colorAccent"
-            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextColor="@color/white">
 
             <com.google.android.material.tabs.TabItem

@@ -27,7 +27,7 @@
     <string name="detail_vote_average_format">%1$,.1f/10</string>
     <string name="detail_author_format">by %s</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fab_favorite">FAVORITE</string>
+    <string name="fab_favorite_desc">Favorite!</string>
 
 </resources>

@@ -33,14 +33,19 @@
 	<dimen name="favorite_btn_padding_vertical_land">6.5333dp</dimen>
 	<dimen name="favorite_btn_padding_horizontal_land">17.4222dp</dimen>
 	<dimen name="favorite_btn_margin_top_land">10.8889dp</dimen>
-	<dimen name="score_margin_top">6.5333dp</dimen>
-	<dimen name="score_margin_top_land">6.5333dp</dimen>
-	<dimen name="duration_margin_top">6.5333dp</dimen>
+	<dimen name="duration_margin_top">8.7111dp</dimen>
 	<dimen name="duration_margin_top_land">6.5333dp</dimen>
+	<dimen name="score_margin_top">10.8889dp</dimen>
+	<dimen name="score_margin_top_land">8.7111dp</dimen>
 	<dimen name="text_size_review_content">16.3333dp</dimen>
 	<dimen name="text_size_review_author">14.1556dp</dimen>
-	<dimen name="text_size_trailer_title">17.4222dp</dimen>
+	<dimen name="text_size_trailer_title">16.3333dp</dimen>
 	<dimen name="text_size_detail_list_header_title">26.1333dp</dimen>
 	<dimen name="text_size_detail_title_expanded">39.2000dp</dimen>
-	<dimen name="text_size_detail_title_collapsed">19.6000dp</dimen>
+	<dimen name="text_size_detail_title_collapsed">21.7778dp</dimen>
+	<dimen name="fab_margin">8.7111dp</dimen>
+	<dimen name="fab_margin_right">26.1333dp</dimen>
+	<dimen name="fab_margin_land">13.0667dp</dimen>
+	<dimen name="fab_margin_right_land">52.2667dp</dimen>
+	<dimen name="detail_year_margin_fab">17.4222dp</dimen>
 </resources>

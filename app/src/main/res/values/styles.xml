@@ -1,7 +1,7 @@
 <resources xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -36,6 +36,15 @@
         <item name="android:textColor">#EEEEEE</item>
         <item name="android:textColorPrimary">@color/colorPrimary</item>
         <item name="android:textColorSecondary">@color/colorAccent</item>
+    </style>
+
+    <style name="MyFloatingActionButton" parent="@style/Widget.MaterialComponents.FloatingActionButton">
+        <item name="materialThemeOverlay">@style/MyFabOverlay</item>
+    </style>
+
+    <style name="MyFabOverlay">
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorOnSecondary">@color/black</item>
     </style>
 
 </resources>

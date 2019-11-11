@@ -79,6 +79,7 @@
                     android:id="@+id/year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/detail_year_margin_fab"
                     android:text="@{DetailUtils.getReleaseYear(viewModel.mMovie.releaseDate)}"
                     android:textSize="@dimen/textsize_year"
                     app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -105,23 +106,6 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/guideline3"
                     app:layout_constraintTop_toBottomOf="@id/duration" />
-
-                <ImageButton
-                    android:id="@+id/favorate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/favorite_btn_margin_top_land"
-                    android:background="@drawable/bg_btn_favorite"
-                    android:elevation="2dp"
-                    android:onClick="@{(v) -> viewModel.mOnClickListener.onClick(v)}"
-                    android:paddingLeft="@dimen/favorite_btn_padding_horizontal"
-                    android:paddingTop="@dimen/favorite_btn_padding_vertical"
-                    android:paddingRight="@dimen/favorite_btn_padding_horizontal"
-                    android:paddingBottom="@dimen/favorite_btn_padding_vertical"
-                    android:src="@drawable/selector_favorite"
-                    app:favorite="@{viewModel.mMovie.favorite}"
-                    app:layout_constraintStart_toStartOf="@+id/guideline3"
-                    app:layout_constraintTop_toBottomOf="@id/score" />
 
                 <TextView
                     android:id="@+id/description"
@@ -197,6 +181,28 @@
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/favorate"
+            style="@style/MyFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin_right"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:contentDescription="@string/fab_favorite_desc"
+            android:onClick="@{(v) -> viewModel.mOnClickListener.onClick(v)}"
+            android:text="@string/fab_favorite"
+            android:textColor="@drawable/selector_trailer_title"
+            app:backgroundTint="@color/white"
+            app:elevation="@dimen/default_elevation"
+            android:textStyle="bold"
+            app:favorite="@{viewModel.mMovie.favorite}"
+            app:icon="@drawable/selector_favorite"
+            app:iconTint="@color/red"
+            app:layout_anchor="@id/appbarlayout"
+            app:layout_anchorGravity="bottom|right|end" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
