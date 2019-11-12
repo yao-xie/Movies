@@ -21,7 +21,6 @@ import com.xieyao.movies.utils.ConfigUtils;
 public class MainFragment extends BaseFragment {
 
     private MainViewModel mViewModel;
-    private ViewPager2 mViewPager;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -44,11 +43,11 @@ public class MainFragment extends BaseFragment {
         binding.setViewModel(mViewModel);
         View view = binding.getRoot();
 
-        mViewPager = view.findViewById(R.id.viewpager);
+        ViewPager2 viewPager = view.findViewById(R.id.viewpager);
         ListFragmentAdapter adapter = new ListFragmentAdapter(this);
-        mViewPager.setAdapter(adapter);
+        viewPager.setAdapter(adapter);
         TabLayout tabLayout = view.findViewById(R.id.tablayout);
-        new TabLayoutMediator(tabLayout, mViewPager, new TabLayoutMediator.TabConfigurationStrategy() {
+        new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 tab.setText(ConfigUtils.getTabTitle(position));
@@ -57,32 +56,4 @@ public class MainFragment extends BaseFragment {
         return view;
     }
 
-    private void addOnTabSelectedListener(View root) {
-        TabLayout tabLayout = root.findViewById(R.id.tablayout);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-//                try {
-//                    mTabPosition = tab.getPosition();
-//                    ConfigUtils.setListMode(mTabPosition);
-//                    mViewModel.refreshMovies();
-//                    if (null != mRecyclerView) {
-//                        mRecyclerView.scrollToPosition(0);
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-    }
 }

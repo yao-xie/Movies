@@ -25,7 +25,6 @@
 
     <style name="Toolbar.TitleText.Collapsed" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">@dimen/text_size_detail_title_collapsed</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorPrimary">@color/colorPrimary</item>
         <item name="android:textColorSecondary">@color/colorAccent</item>

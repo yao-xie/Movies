@@ -21,7 +21,7 @@ public class UIUtils {
         int expectMovieitemHeight = expectMovieitemWidth * 3 / 2;
         int expectMovieitemAcreage = expectMovieitemWidth * expectMovieitemHeight;
         if (screenAcreage / expectMovieitemAcreage > 20) {
-            return getCount(screenWidth, screenAcreage, count);
+            return getCount(screenWidth, screenAcreage, --count);
         }
         return count;
     }
